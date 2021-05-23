@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Program | @project-serum/anchor</title>
-	<meta name="description" content="Documentation for @project-serum/anchor">
+	<title>Program | @project-serum/anchor - v0.6.0</title>
+	<meta name="description" content="Documentation for @project-serum/anchor - v0.6.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 	<script async src="../assets/js/search.js" id="search-script"></script>
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@project-serum/anchor</a>
+					<a href="../index.html" class="title">@project-serum/anchor - v0.6.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -52,7 +52,7 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../modules.html">@project-serum/anchor</a>
+					<a href="../modules.html">@project-serum/anchor - v0.6.0</a>
 				</li>
 				<li>
 					<a href="program.html">Program</a>
@@ -145,13 +145,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Program<span class="tsd-signature-symbol">(</span>idl<span class="tsd-signature-symbol">: </span><a href="../modules.html#idl" class="tsd-signature-type" data-tsd-kind="Type alias">Idl</a>, programId<span class="tsd-signature-symbol">: </span><a href="web3.publickey.html" class="tsd-signature-type" data-tsd-kind="Class">PublicKey</a>, provider<span class="tsd-signature-symbol">?: </span><a href="provider.html" class="tsd-signature-type" data-tsd-kind="Class">Provider</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="program.html" class="tsd-signature-type" data-tsd-kind="Class">Program</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Program<span class="tsd-signature-symbol">(</span>idl<span class="tsd-signature-symbol">: </span><a href="../modules.html#idl" class="tsd-signature-type" data-tsd-kind="Type alias">Idl</a>, programId<span class="tsd-signature-symbol">: </span><a href="../modules.html#address" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a>, provider<span class="tsd-signature-symbol">?: </span><a href="provider.html" class="tsd-signature-type" data-tsd-kind="Class">Provider</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="program.html" class="tsd-signature-type" data-tsd-kind="Class">Program</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/dfe41f8/ts/src/program/index.ts#L228">src/program/index.ts:228</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L229">src/program/index.ts:229</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -163,7 +163,7 @@
 									</div>
 								</li>
 								<li>
-									<h5>programId: <a href="web3.publickey.html" class="tsd-signature-type" data-tsd-kind="Class">PublicKey</a></h5>
+									<h5>programId: <a href="../modules.html#address" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>The on-chain address of the program.</p>
 									</div>
@@ -189,7 +189,7 @@
 					<div class="tsd-signature tsd-kind-icon">account<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AccountNamespace</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/dfe41f8/ts/src/program/index.ts#L96">src/program/index.ts:96</a></li>
+							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L97">src/program/index.ts:97</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -199,19 +199,19 @@
 						<a href="#account" id="account" style="color: inherit; text-decoration: none;">
 							<h2>account</h2>
 						</a>
-						<pre><code class="language-javascript"><span style="color: #001080">program</span><span style="color: #000000">.</span><span style="color: #001080">account</span><span style="color: #000000">.&lt;</span><span style="color: #001080">account</span><span style="color: #000000">&gt;(</span><span style="color: #001080">publicKey</span><span style="color: #000000">);</span>
+						<pre><code class="language-javascript"><span style="color: #001080">program</span><span style="color: #000000">.</span><span style="color: #001080">account</span><span style="color: #000000">.&lt;</span><span style="color: #001080">account</span><span style="color: #000000">&gt;(</span><span style="color: #001080">address</span><span style="color: #000000">);</span>
 </code></pre>
 						<a href="#parameters" id="parameters" style="color: inherit; text-decoration: none;">
 							<h2>Parameters</h2>
 						</a>
 						<ol>
-							<li><code>publicKey</code> - The <a href="web3.publickey.html">PublicKey</a> of the account.</li>
+							<li><code>address</code> - The <a href="../modules.html#address">Address</a> of the account.</li>
 						</ol>
 						<a href="#example" id="example" style="color: inherit; text-decoration: none;">
 							<h2>Example</h2>
 						</a>
 						<p>To fetch a <code>Counter</code> object from the above example,</p>
-						<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">counter</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">program</span><span style="color: #000000">.</span><span style="color: #001080">account</span><span style="color: #000000">.</span><span style="color: #795E26">counter</span><span style="color: #000000">(</span><span style="color: #001080">publicKey</span><span style="color: #000000">);</span>
+						<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">counter</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">program</span><span style="color: #000000">.</span><span style="color: #001080">account</span><span style="color: #000000">.</span><span style="color: #795E26">counter</span><span style="color: #000000">(</span><span style="color: #001080">address</span><span style="color: #000000">);</span>
 </code></pre>
 					</div>
 				</section>
@@ -221,7 +221,7 @@
 					<div class="tsd-signature tsd-kind-icon">instruction<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">InstructionNamespace</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/dfe41f8/ts/src/program/index.ts#L126">src/program/index.ts:126</a></li>
+							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L127">src/program/index.ts:127</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -260,7 +260,7 @@
 					<div class="tsd-signature tsd-kind-icon">rpc<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RpcNamespace</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/dfe41f8/ts/src/program/index.ts#L73">src/program/index.ts:73</a></li>
+							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L74">src/program/index.ts:74</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -301,7 +301,7 @@
 					<div class="tsd-signature tsd-kind-icon">simulate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">SimulateNamespace</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/dfe41f8/ts/src/program/index.ts#L191">src/program/index.ts:191</a></li>
+							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L192">src/program/index.ts:192</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -344,7 +344,7 @@
 					<div class="tsd-signature tsd-kind-icon">state<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">StateNamespace</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/dfe41f8/ts/src/program/index.ts#L196">src/program/index.ts:196</a></li>
+							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L197">src/program/index.ts:197</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -359,7 +359,7 @@
 					<div class="tsd-signature tsd-kind-icon">transaction<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TransactionNamespace</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/dfe41f8/ts/src/program/index.ts#L156">src/program/index.ts:156</a></li>
+							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L157">src/program/index.ts:157</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -405,7 +405,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/dfe41f8/ts/src/program/index.ts#L217">src/program/index.ts:217</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L218">src/program/index.ts:218</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -427,7 +427,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/dfe41f8/ts/src/program/index.ts#L209">src/program/index.ts:209</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L210">src/program/index.ts:210</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -449,7 +449,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/dfe41f8/ts/src/program/index.ts#L201">src/program/index.ts:201</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L202">src/program/index.ts:202</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -471,7 +471,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/dfe41f8/ts/src/program/index.ts#L225">src/program/index.ts:225</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L226">src/program/index.ts:226</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -496,7 +496,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/dfe41f8/ts/src/program/index.ts#L300">src/program/index.ts:300</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L307">src/program/index.ts:307</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -555,7 +555,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/dfe41f8/ts/src/program/index.ts#L325">src/program/index.ts:325</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L328">src/program/index.ts:328</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -577,13 +577,13 @@
 					<a name="at" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> at</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">at<span class="tsd-signature-symbol">(</span>programId<span class="tsd-signature-symbol">: </span><a href="web3.publickey.html" class="tsd-signature-type" data-tsd-kind="Class">PublicKey</a>, provider<span class="tsd-signature-symbol">?: </span><a href="provider.html" class="tsd-signature-type" data-tsd-kind="Class">Provider</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="program.html" class="tsd-signature-type" data-tsd-kind="Class">Program</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">at<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><a href="../modules.html#address" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a>, provider<span class="tsd-signature-symbol">?: </span><a href="provider.html" class="tsd-signature-type" data-tsd-kind="Class">Provider</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="program.html" class="tsd-signature-type" data-tsd-kind="Class">Program</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/dfe41f8/ts/src/program/index.ts#L269">src/program/index.ts:269</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L272">src/program/index.ts:272</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -596,10 +596,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>programId: <a href="web3.publickey.html" class="tsd-signature-type" data-tsd-kind="Class">PublicKey</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The on-chain address of the program.</p>
-									</div>
+									<h5>address: <a href="../modules.html#address" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> provider: <a href="provider.html" class="tsd-signature-type" data-tsd-kind="Class">Provider</a></h5>
@@ -616,13 +613,13 @@
 					<a name="fetchidl" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> fetch<wbr>Idl</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">fetch<wbr>Idl<span class="tsd-signature-symbol">(</span>programId<span class="tsd-signature-symbol">: </span><a href="web3.publickey.html" class="tsd-signature-type" data-tsd-kind="Class">PublicKey</a>, provider<span class="tsd-signature-symbol">?: </span><a href="provider.html" class="tsd-signature-type" data-tsd-kind="Class">Provider</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">fetch<wbr>Idl<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><a href="../modules.html#address" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a>, provider<span class="tsd-signature-symbol">?: </span><a href="provider.html" class="tsd-signature-type" data-tsd-kind="Class">Provider</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/dfe41f8/ts/src/program/index.ts#L283">src/program/index.ts:283</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L288">src/program/index.ts:288</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -635,10 +632,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>programId: <a href="web3.publickey.html" class="tsd-signature-type" data-tsd-kind="Class">PublicKey</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The on-chain address of the program.</p>
-									</div>
+									<h5>address: <a href="../modules.html#address" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> provider: <a href="provider.html" class="tsd-signature-type" data-tsd-kind="Class">Provider</a></h5>
@@ -731,6 +725,9 @@
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../modules.html#accounts" class="tsd-kind-icon">Accounts</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../modules.html#address" class="tsd-kind-icon">Address</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../modules.html#context" class="tsd-kind-icon">Context</a>
