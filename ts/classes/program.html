@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Program | @project-serum/anchor - v0.6.0</title>
-	<meta name="description" content="Documentation for @project-serum/anchor - v0.6.0">
+	<title>Program | @project-serum/anchor - v0.7.0</title>
+	<meta name="description" content="Documentation for @project-serum/anchor - v0.7.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 	<script async src="../assets/js/search.js" id="search-script"></script>
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@project-serum/anchor - v0.6.0</a>
+					<a href="../index.html" class="title">@project-serum/anchor - v0.7.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -52,7 +52,7 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../modules.html">@project-serum/anchor - v0.6.0</a>
+					<a href="../index.html">@project-serum/anchor - v0.7.0</a>
 				</li>
 				<li>
 					<a href="program.html">Program</a>
@@ -79,14 +79,17 @@
 						deserialized accounts, decode instruction data, subscribe to account
 					changes, and listen to events.</p>
 					<p>In addition to field accessors and methods, the object provides a set of
-						dynamically generated properties (internally referred to as namespaces) that
-						map one-to-one to program instructions and accounts. These namespaces
-					generally can be used as follows:</p>
-					<pre><code class="language-javascript"><span style="color: #001080">program</span><span style="color: #000000">.&lt;</span><span style="color: #001080">namespace</span><span style="color: #000000">&gt;.&lt;</span><span style="color: #001080">program</span><span style="color: #000000">-</span><span style="color: #001080">specific</span><span style="color: #000000">-</span><span style="color: #001080">field</span><span style="color: #000000">&gt;</span>
+						dynamically generated properties, also known as namespaces, that
+						map one-to-one to program methods and accounts. These namespaces generally
+					can be used as follows:</p>
+					<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+						<h2>Usage</h2>
+					</a>
+					<pre><code class="language-javascript"><span style="color: #001080">program</span><span style="color: #000000">.&lt;</span><span style="color: #001080">namespace</span><span style="color: #000000">&gt;.&lt;</span><span style="color: #001080">program</span><span style="color: #000000">-</span><span style="color: #001080">specific</span><span style="color: #000000">-</span><span style="color: #001080">method</span><span style="color: #000000">&gt;</span>
 </code></pre>
 					<p>API specifics are namespace dependent. The examples used in the documentation
 						below will refer to the two counter examples found
-					<a href="https://project-serum.github.io/anchor/ts/#examples">here</a>.</p>
+					<a href="https://github.com/project-serum/anchor#examples">here</a>.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -145,25 +148,25 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Program<span class="tsd-signature-symbol">(</span>idl<span class="tsd-signature-symbol">: </span><a href="../modules.html#idl" class="tsd-signature-type" data-tsd-kind="Type alias">Idl</a>, programId<span class="tsd-signature-symbol">: </span><a href="../modules.html#address" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a>, provider<span class="tsd-signature-symbol">?: </span><a href="provider.html" class="tsd-signature-type" data-tsd-kind="Class">Provider</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="program.html" class="tsd-signature-type" data-tsd-kind="Class">Program</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Program<span class="tsd-signature-symbol">(</span>idl<span class="tsd-signature-symbol">: </span><a href="../index.html#idl" class="tsd-signature-type" data-tsd-kind="Type alias">Idl</a>, programId<span class="tsd-signature-symbol">: </span><a href="../index.html#address" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a>, provider<span class="tsd-signature-symbol">?: </span><a href="provider.html" class="tsd-signature-type" data-tsd-kind="Class">Provider</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="program.html" class="tsd-signature-type" data-tsd-kind="Class">Program</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L229">src/program/index.ts:229</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/a8fd1e0/ts/src/program/index.ts#L235">src/program/index.ts:235</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>idl: <a href="../modules.html#idl" class="tsd-signature-type" data-tsd-kind="Type alias">Idl</a></h5>
+									<h5>idl: <a href="../index.html#idl" class="tsd-signature-type" data-tsd-kind="Type alias">Idl</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>The interface definition.</p>
 									</div>
 								</li>
 								<li>
-									<h5>programId: <a href="../modules.html#address" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a></h5>
+									<h5>programId: <a href="../index.html#address" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>The on-chain address of the program.</p>
 									</div>
@@ -172,7 +175,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> provider: <a href="provider.html" class="tsd-signature-type" data-tsd-kind="Class">Provider</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>The network and wallet context to use. If not provided
-										then uses <a href="../modules.html#getprovider">getProvider</a>.</p>
+										then uses <a href="../index.html#getprovider">getProvider</a>.</p>
 									</div>
 								</li>
 							</ul>
@@ -186,50 +189,47 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="account" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> account</h3>
-					<div class="tsd-signature tsd-kind-icon">account<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AccountNamespace</span></div>
+					<div class="tsd-signature tsd-kind-icon">account<span class="tsd-signature-symbol">:</span> <a href="../interfaces/accountnamespace.html" class="tsd-signature-type" data-tsd-kind="Interface">AccountNamespace</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L97">src/program/index.ts:97</a></li>
+							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/a8fd1e0/ts/src/program/index.ts#L98">src/program/index.ts:98</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Async functions to fetch deserialized program accounts from a cluster.</p>
+							<p>The namespace provides handles to an <a href="accountclient.html">AccountClient</a> object for each
+							account in the program.</p>
 						</div>
-						<a href="#account" id="account" style="color: inherit; text-decoration: none;">
-							<h2>account</h2>
+						<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+							<h2>Usage</h2>
 						</a>
-						<pre><code class="language-javascript"><span style="color: #001080">program</span><span style="color: #000000">.</span><span style="color: #001080">account</span><span style="color: #000000">.&lt;</span><span style="color: #001080">account</span><span style="color: #000000">&gt;(</span><span style="color: #001080">address</span><span style="color: #000000">);</span>
+						<pre><code class="language-javascript"><span style="color: #001080">program</span><span style="color: #000000">.</span><span style="color: #001080">account</span><span style="color: #000000">.&lt;</span><span style="color: #001080">account</span><span style="color: #000000">-</span><span style="color: #001080">client</span><span style="color: #000000">&gt;</span>
 </code></pre>
-						<a href="#parameters" id="parameters" style="color: inherit; text-decoration: none;">
-							<h2>Parameters</h2>
-						</a>
-						<ol>
-							<li><code>address</code> - The <a href="../modules.html#address">Address</a> of the account.</li>
-						</ol>
 						<a href="#example" id="example" style="color: inherit; text-decoration: none;">
 							<h2>Example</h2>
 						</a>
-						<p>To fetch a <code>Counter</code> object from the above example,</p>
-						<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">counter</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">program</span><span style="color: #000000">.</span><span style="color: #001080">account</span><span style="color: #000000">.</span><span style="color: #795E26">counter</span><span style="color: #000000">(</span><span style="color: #001080">address</span><span style="color: #000000">);</span>
+						<p>To fetch a <code>Counter</code> account from the above example,</p>
+						<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">counter</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">program</span><span style="color: #000000">.</span><span style="color: #001080">account</span><span style="color: #000000">.</span><span style="color: #001080">counter</span><span style="color: #000000">.</span><span style="color: #795E26">fetch</span><span style="color: #000000">(</span><span style="color: #001080">address</span><span style="color: #000000">);</span>
 </code></pre>
+						<p>For the full API, see the <a href="accountclient.html">AccountClient</a> reference.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="instruction" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> instruction</h3>
-					<div class="tsd-signature tsd-kind-icon">instruction<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">InstructionNamespace</span></div>
+					<div class="tsd-signature tsd-kind-icon">instruction<span class="tsd-signature-symbol">:</span> <a href="../interfaces/instructionnamespace.html" class="tsd-signature-type" data-tsd-kind="Interface">InstructionNamespace</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L127">src/program/index.ts:127</a></li>
+							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/a8fd1e0/ts/src/program/index.ts#L129">src/program/index.ts:129</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Functions to build <a href="web3.transactioninstruction.html">TransactionInstruction</a> objects for program methods.</p>
+							<p>The namespace provides functions to build <a href="web3.transactioninstruction.html">TransactionInstruction</a>
+							objects for each method of a program.</p>
 						</div>
-						<a href="#instruction" id="instruction" style="color: inherit; text-decoration: none;">
-							<h2>instruction</h2>
+						<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+							<h2>Usage</h2>
 						</a>
 						<pre><code class="language-javascript"><span style="color: #001080">program</span><span style="color: #000000">.</span><span style="color: #001080">instruction</span><span style="color: #000000">.&lt;</span><span style="color: #001080">method</span><span style="color: #000000">&gt;(...</span><span style="color: #001080">args</span><span style="color: #000000">, </span><span style="color: #001080">ctx</span><span style="color: #000000">);</span>
 </code></pre>
@@ -239,7 +239,7 @@
 						<ol>
 							<li><code>args</code> - The positional arguments for the program. The type and number
 							of these arguments depend on the program being used.</li>
-							<li><code>ctx</code>  - <a href="../modules.html#context">Context</a> non-argument parameters to pass to the method.
+							<li><code>ctx</code>  - <a href="../index.html#context">Context</a> non-argument parameters to pass to the method.
 							Always the last parameter in the method call.</li>
 						</ol>
 						<a href="#example" id="example" style="color: inherit; text-decoration: none;">
@@ -257,21 +257,21 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="rpc" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> rpc</h3>
-					<div class="tsd-signature tsd-kind-icon">rpc<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RpcNamespace</span></div>
+					<div class="tsd-signature tsd-kind-icon">rpc<span class="tsd-signature-symbol">:</span> <a href="../interfaces/rpcnamespace.html" class="tsd-signature-type" data-tsd-kind="Interface">RpcNamespace</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L74">src/program/index.ts:74</a></li>
+							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/a8fd1e0/ts/src/program/index.ts#L76">src/program/index.ts:76</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Async methods to send signed transactions invoking <em>non</em>-state methods
-							on an Anchor program.</p>
+							<p>Async methods to send signed transactions to <em>non</em>-state methods on the
+							program, returning a <a href="../modules/web3.html#transactionsignature">TransactionSignature</a>.</p>
 						</div>
-						<a href="#rpc" id="rpc" style="color: inherit; text-decoration: none;">
-							<h2>rpc</h2>
+						<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+							<h2>Usage</h2>
 						</a>
-						<pre><code class="language-javascript"><span style="color: #001080">program</span><span style="color: #000000">.</span><span style="color: #001080">rpc</span><span style="color: #000000">.&lt;</span><span style="color: #001080">method</span><span style="color: #000000">&gt;(...</span><span style="color: #001080">args</span><span style="color: #000000">, </span><span style="color: #001080">ctx</span><span style="color: #000000">);</span>
+						<pre><code class="language-javascript"><span style="color: #001080">rpc</span><span style="color: #000000">.&lt;</span><span style="color: #001080">method</span><span style="color: #000000">&gt;(...</span><span style="color: #001080">args</span><span style="color: #000000">, </span><span style="color: #001080">ctx</span><span style="color: #000000">);</span>
 </code></pre>
 						<a href="#parameters" id="parameters" style="color: inherit; text-decoration: none;">
 							<h2>Parameters</h2>
@@ -279,7 +279,7 @@
 						<ol>
 							<li><code>args</code> - The positional arguments for the program. The type and number
 							of these arguments depend on the program being used.</li>
-							<li><code>ctx</code>  - <a href="../modules.html#context">Context</a> non-argument parameters to pass to the method.
+							<li><code>ctx</code>  - <a href="../index.html#context">Context</a> non-argument parameters to pass to the method.
 							Always the last parameter in the method call.</li>
 						</ol>
 						<a href="#example" id="example" style="color: inherit; text-decoration: none;">
@@ -298,16 +298,17 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="simulate" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> simulate</h3>
-					<div class="tsd-signature tsd-kind-icon">simulate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">SimulateNamespace</span></div>
+					<div class="tsd-signature tsd-kind-icon">simulate<span class="tsd-signature-symbol">:</span> <a href="../interfaces/simulatenamespace.html" class="tsd-signature-type" data-tsd-kind="Interface">SimulateNamespace</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L192">src/program/index.ts:192</a></li>
+							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/a8fd1e0/ts/src/program/index.ts#L196">src/program/index.ts:196</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Async functions to simulate instructions against an Anchor program,
-							returning a list of deserialized events <em>and</em> raw program logs.</p>
+							<p>The namespace provides functions to simulate transactions for each method
+								of a program, returning a list of deserialized events <em>and</em> raw program
+							logs.</p>
 						</div>
 						<p>One can use this to read data calculated from a program on chain, by
 							emitting an event in the program and reading the emitted event client side
@@ -323,14 +324,14 @@
 						<ol>
 							<li><code>args</code> - The positional arguments for the program. The type and number
 							of these arguments depend on the program being used.</li>
-							<li><code>ctx</code>  - <a href="../modules.html#context">Context</a> non-argument parameters to pass to the method.
+							<li><code>ctx</code>  - <a href="../index.html#context">Context</a> non-argument parameters to pass to the method.
 							Always the last parameter in the method call.</li>
 						</ol>
 						<a href="#example" id="example" style="color: inherit; text-decoration: none;">
 							<h2>Example</h2>
 						</a>
 						<p>To simulate the <code>increment</code> method above,</p>
-						<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">tx</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">program</span><span style="color: #000000">.</span><span style="color: #001080">simulate</span><span style="color: #000000">.</span><span style="color: #795E26">increment</span><span style="color: #000000">({</span>
+						<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">events</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">program</span><span style="color: #000000">.</span><span style="color: #001080">simulate</span><span style="color: #000000">.</span><span style="color: #795E26">increment</span><span style="color: #000000">({</span>
 <span style="color: #000000">  </span><span style="color: #001080">accounts:</span><span style="color: #000000"> {</span>
 <span style="color: #000000">    </span><span style="color: #001080">counter</span><span style="color: #000000">,</span>
 <span style="color: #000000">  },</span>
@@ -341,33 +342,36 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="state" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> state</h3>
-					<div class="tsd-signature tsd-kind-icon">state<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">StateNamespace</span></div>
+					<div class="tsd-signature tsd-kind-icon">state<span class="tsd-signature-symbol">:</span> <a href="stateclient.html" class="tsd-signature-type" data-tsd-kind="Class">StateClient</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L197">src/program/index.ts:197</a></li>
+							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/a8fd1e0/ts/src/program/index.ts#L203">src/program/index.ts:203</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Object with state account accessors and rpcs.</p>
+							<p>A client for the program state. Similar to the base <a href="program.html">Program</a> client,
+								one can use this to send transactions and read accounts for the state
+							abstraction.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="transaction" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> transaction</h3>
-					<div class="tsd-signature tsd-kind-icon">transaction<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TransactionNamespace</span></div>
+					<div class="tsd-signature tsd-kind-icon">transaction<span class="tsd-signature-symbol">:</span> <a href="../interfaces/transactionnamespace.html" class="tsd-signature-type" data-tsd-kind="Interface">TransactionNamespace</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L157">src/program/index.ts:157</a></li>
+							<li>Defined in <a href="https://github.com/project-serum/anchor/blob/a8fd1e0/ts/src/program/index.ts#L160">src/program/index.ts:160</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Functions to build <a href="web3.transaction.html">Transaction</a> objects.</p>
+							<p>The namespace provides functions to build <a href="web3.transaction.html">Transaction</a> objects for each
+							method of a program.</p>
 						</div>
-						<a href="#transaction" id="transaction" style="color: inherit; text-decoration: none;">
-							<h2>transaction</h2>
+						<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+							<h2>Usage</h2>
 						</a>
 						<pre><code class="language-javascript"><span style="color: #001080">program</span><span style="color: #000000">.</span><span style="color: #001080">transaction</span><span style="color: #000000">.&lt;</span><span style="color: #001080">method</span><span style="color: #000000">&gt;(...</span><span style="color: #001080">args</span><span style="color: #000000">, </span><span style="color: #001080">ctx</span><span style="color: #000000">);</span>
 </code></pre>
@@ -377,7 +381,7 @@
 						<ol>
 							<li><code>args</code> - The positional arguments for the program. The type and number
 							of these arguments depend on the program being used.</li>
-							<li><code>ctx</code>  - <a href="../modules.html#context">Context</a> non-argument parameters to pass to the method.
+							<li><code>ctx</code>  - <a href="../index.html#context">Context</a> non-argument parameters to pass to the method.
 							Always the last parameter in the method call.</li>
 						</ol>
 						<a href="#example" id="example" style="color: inherit; text-decoration: none;">
@@ -405,7 +409,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L218">src/program/index.ts:218</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/a8fd1e0/ts/src/program/index.ts#L224">src/program/index.ts:224</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -421,13 +425,13 @@
 					<a name="idl" class="tsd-anchor"></a>
 					<h3>idl</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> idl<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules.html#idl" class="tsd-signature-type" data-tsd-kind="Type alias">Idl</a></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> idl<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../index.html#idl" class="tsd-signature-type" data-tsd-kind="Type alias">Idl</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L210">src/program/index.ts:210</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/a8fd1e0/ts/src/program/index.ts#L216">src/program/index.ts:216</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -435,7 +439,7 @@
 									<p>IDL defining the program&#39;s interface.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <a href="../modules.html#idl" class="tsd-signature-type" data-tsd-kind="Type alias">Idl</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../index.html#idl" class="tsd-signature-type" data-tsd-kind="Type alias">Idl</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -449,7 +453,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L202">src/program/index.ts:202</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/a8fd1e0/ts/src/program/index.ts#L208">src/program/index.ts:208</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -471,7 +475,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L226">src/program/index.ts:226</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/a8fd1e0/ts/src/program/index.ts#L232">src/program/index.ts:232</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -496,12 +500,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L307">src/program/index.ts:307</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/a8fd1e0/ts/src/program/index.ts#L313">src/program/index.ts:313</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Invokes the given callback everytime the given event is emitted.</p>
+									<p>Invokes the given callback every time the given event is emitted.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -555,7 +559,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L328">src/program/index.ts:328</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/a8fd1e0/ts/src/program/index.ts#L334">src/program/index.ts:334</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -577,13 +581,13 @@
 					<a name="at" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> at</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">at<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><a href="../modules.html#address" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a>, provider<span class="tsd-signature-symbol">?: </span><a href="provider.html" class="tsd-signature-type" data-tsd-kind="Class">Provider</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="program.html" class="tsd-signature-type" data-tsd-kind="Class">Program</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">at<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><a href="../index.html#address" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a>, provider<span class="tsd-signature-symbol">?: </span><a href="provider.html" class="tsd-signature-type" data-tsd-kind="Class">Provider</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="program.html" class="tsd-signature-type" data-tsd-kind="Class">Program</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L272">src/program/index.ts:272</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/a8fd1e0/ts/src/program/index.ts#L278">src/program/index.ts:278</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -596,7 +600,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>address: <a href="../modules.html#address" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a></h5>
+									<h5>address: <a href="../index.html#address" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> provider: <a href="provider.html" class="tsd-signature-type" data-tsd-kind="Class">Provider</a></h5>
@@ -613,13 +617,13 @@
 					<a name="fetchidl" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> fetch<wbr>Idl</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">fetch<wbr>Idl<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><a href="../modules.html#address" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a>, provider<span class="tsd-signature-symbol">?: </span><a href="provider.html" class="tsd-signature-type" data-tsd-kind="Class">Provider</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">fetch<wbr>Idl<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><a href="../index.html#address" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a>, provider<span class="tsd-signature-symbol">?: </span><a href="provider.html" class="tsd-signature-type" data-tsd-kind="Class">Provider</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/fd0969f/ts/src/program/index.ts#L288">src/program/index.ts:288</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/a8fd1e0/ts/src/program/index.ts#L294">src/program/index.ts:294</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -632,7 +636,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>address: <a href="../modules.html#address" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a></h5>
+									<h5>address: <a href="../index.html#address" class="tsd-signature-type" data-tsd-kind="Type alias">Address</a></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> provider: <a href="provider.html" class="tsd-signature-type" data-tsd-kind="Class">Provider</a></h5>
@@ -651,17 +655,26 @@
 			<nav class="tsd-navigation primary">
 				<ul>
 					<li class=" ">
-						<a href="../modules.html">Exports</a>
+						<a href="../index.html">Exports</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="accountclient.html" class="tsd-kind-icon">Account<wbr>Client</a>
+					</li>
 					<li class=" tsd-kind-class tsd-is-external">
 						<a href="bn.html" class="tsd-kind-icon">BN</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="coder.html" class="tsd-kind-icon">Coder</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="eventcoder.html" class="tsd-kind-icon">Event<wbr>Coder</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="instructioncoder.html" class="tsd-kind-icon">Instruction<wbr>Coder</a>
 					</li>
 				</ul>
 				<ul class="current">
@@ -721,31 +734,67 @@
 						<a href="provider.html" class="tsd-kind-icon">Provider</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="stateclient.html" class="tsd-kind-icon">State<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="statecoder.html" class="tsd-kind-icon">State<wbr>Coder</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="typescoder.html" class="tsd-kind-icon">Types<wbr>Coder</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="wallet.html" class="tsd-kind-icon">Wallet</a>
 					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../modules.html#accounts" class="tsd-kind-icon">Accounts</a>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/accountnamespace.html" class="tsd-kind-icon">Account<wbr>Namespace</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/instructionnamespace.html" class="tsd-kind-icon">Instruction<wbr>Namespace</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/rpcnamespace.html" class="tsd-kind-icon">Rpc<wbr>Namespace</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/simulatenamespace.html" class="tsd-kind-icon">Simulate<wbr>Namespace</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/transactionnamespace.html" class="tsd-kind-icon">Transaction<wbr>Namespace</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="../modules.html#address" class="tsd-kind-icon">Address</a>
+						<a href="../index.html#accounts" class="tsd-kind-icon">Accounts</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="../modules.html#context" class="tsd-kind-icon">Context</a>
+						<a href="../index.html#address" class="tsd-kind-icon">Address</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="../modules.html#idl" class="tsd-kind-icon">Idl</a>
+						<a href="../index.html#context" class="tsd-kind-icon">Context</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../index.html#event" class="tsd-kind-icon">Event</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../index.html#idl" class="tsd-kind-icon">Idl</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../index.html#instructionfn" class="tsd-kind-icon">Instruction<wbr>Fn</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../index.html#rpcfn" class="tsd-kind-icon">Rpc<wbr>Fn</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../index.html#simulatefn" class="tsd-kind-icon">Simulate<wbr>Fn</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../index.html#transactionfn" class="tsd-kind-icon">Transaction<wbr>Fn</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="../modules.html#utils" class="tsd-kind-icon">utils</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="../modules.html#workspace" class="tsd-kind-icon">workspace</a>
+						<a href="../index.html#workspace" class="tsd-kind-icon">workspace</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="../modules.html#getprovider" class="tsd-kind-icon">get<wbr>Provider</a>
+						<a href="../index.html#getprovider" class="tsd-kind-icon">get<wbr>Provider</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="../modules.html#setprovider" class="tsd-kind-icon">set<wbr>Provider</a>
+						<a href="../index.html#setprovider" class="tsd-kind-icon">set<wbr>Provider</a>
 					</li>
 				</ul>
 			</nav>
