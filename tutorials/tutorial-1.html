@@ -9,7 +9,7 @@
     <meta name="theme-color" content="#3eaf7c">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="preload" href="/anchor/assets/css/0.styles.3c0a719b.css" as="style"><link rel="preload" href="/anchor/assets/js/app.96256695.js" as="script"><link rel="preload" href="/anchor/assets/js/2.642364e0.js" as="script"><link rel="preload" href="/anchor/assets/js/14.2bdb63f3.js" as="script"><link rel="prefetch" href="/anchor/assets/js/10.0ed2d71b.js"><link rel="prefetch" href="/anchor/assets/js/11.41d846a9.js"><link rel="prefetch" href="/anchor/assets/js/12.97d422ca.js"><link rel="prefetch" href="/anchor/assets/js/13.8fcab1af.js"><link rel="prefetch" href="/anchor/assets/js/15.1e19b9a4.js"><link rel="prefetch" href="/anchor/assets/js/16.0e05a955.js"><link rel="prefetch" href="/anchor/assets/js/17.b5cd6647.js"><link rel="prefetch" href="/anchor/assets/js/18.46d89adb.js"><link rel="prefetch" href="/anchor/assets/js/19.034a337e.js"><link rel="prefetch" href="/anchor/assets/js/3.60832a0f.js"><link rel="prefetch" href="/anchor/assets/js/4.95ec17ab.js"><link rel="prefetch" href="/anchor/assets/js/5.7ec961d8.js"><link rel="prefetch" href="/anchor/assets/js/6.17d5dd20.js"><link rel="prefetch" href="/anchor/assets/js/7.33a5751e.js"><link rel="prefetch" href="/anchor/assets/js/8.321f27e6.js"><link rel="prefetch" href="/anchor/assets/js/9.f522ea37.js">
+    <link rel="preload" href="/anchor/assets/css/0.styles.3c0a719b.css" as="style"><link rel="preload" href="/anchor/assets/js/app.0afa5815.js" as="script"><link rel="preload" href="/anchor/assets/js/2.642364e0.js" as="script"><link rel="preload" href="/anchor/assets/js/14.588ded0b.js" as="script"><link rel="prefetch" href="/anchor/assets/js/10.f72374e0.js"><link rel="prefetch" href="/anchor/assets/js/11.fcfd5ead.js"><link rel="prefetch" href="/anchor/assets/js/12.2925ea6f.js"><link rel="prefetch" href="/anchor/assets/js/13.1d10da54.js"><link rel="prefetch" href="/anchor/assets/js/15.ad022960.js"><link rel="prefetch" href="/anchor/assets/js/16.944d8497.js"><link rel="prefetch" href="/anchor/assets/js/17.ef09cdf2.js"><link rel="prefetch" href="/anchor/assets/js/18.219073f0.js"><link rel="prefetch" href="/anchor/assets/js/19.1fd7ca23.js"><link rel="prefetch" href="/anchor/assets/js/3.60832a0f.js"><link rel="prefetch" href="/anchor/assets/js/4.95ec17ab.js"><link rel="prefetch" href="/anchor/assets/js/5.7ec961d8.js"><link rel="prefetch" href="/anchor/assets/js/6.17d5dd20.js"><link rel="prefetch" href="/anchor/assets/js/7.33a5751e.js"><link rel="prefetch" href="/anchor/assets/js/8.321f27e6.js"><link rel="prefetch" href="/anchor/assets/js/9.f522ea37.js">
     <link rel="stylesheet" href="/anchor/assets/css/0.styles.3c0a719b.css">
   </head>
   <body>
@@ -63,15 +63,15 @@ build on top of it.</p> <h2 id="clone-the-repo"><a href="#clone-the-repo" class=
 Rust types can be passed to the instruction to define inputs to the program.</p> <div class="custom-block tip"><p class="custom-block-title">TIP</p> <p>If you'd like to pass in your own type as an input to an instruction handler, then it must be
 defined in the same <code>src/lib.rs</code> file as the <code>#[program]</code> module, so that the IDL parser can
 pick it up.</p></div> <p>Additionally,
-notice how we take a mutable reference to <code>my_account</code> and assign the <code>data</code> to it. This leads us
+notice how we take a mutable reference to <code>my_account</code> and assign the <code>data</code> to it. This leads us to
 the <code>Initialize</code> struct, deriving <code>Accounts</code>. There are three things to notice about <code>Initialize</code>.</p> <ol><li>The <code>my_account</code> field is of type <code>ProgramAccount&lt;'info, MyAccount&gt;</code>, telling the program it <em>must</em>
 be <strong>owned</strong> by the currently executing program, and the deserialized data structure is <code>MyAccount</code>.</li> <li>The <code>my_account</code> field is marked with the <code>#[account(init)]</code> attribute. This should be used
 in one situation: when a given <code>ProgramAccount</code> is newly created and is being used by the program
-for the first time (and thus it's data field is all zero). If <code>#[account(init)]</code> is not used
+for the first time (and thus its data field is all zero). If <code>#[account(init)]</code> is not used
 when account data is zero initialized, the transaction will be rejected.</li> <li>The <code>Rent</code> <strong>sysvar</strong> is required for the rent exemption check, which the framework enforces
 by default for any account marked with <code>#[account(init)]</code>. To be more explicit about the check,
 one can specify <code>#[account(init, rent_exempt)]</code>. To skip this check, (and thus
-allowing one to omit the <code>Rent</code> acccount) one can specify
+allowing you to omit the <code>Rent</code> acccount), you can specify
 <code>#[account(init, rent_exempt = skip)]</code> on the account being initialized (here, <code>my_account</code>).</li></ol> <details class="custom-block details"><summary>DETAILS</summary> <p>All accounts created with Anchor are laid out as follows: <code>8-byte-discriminator || borsh serialized data</code>. The 8-byte-discriminator is created from the first 8 bytes of the
 <code>Sha256</code> hash of the account's type--using the example above, <code>sha256(&quot;MyAccount&quot;)[..8]</code>.</p> <p>Importantly, this allows a program to know for certain an account is indeed of a given type.
 Without it, a program would be vulnerable to account injection attacks, where a malicious user
@@ -81,7 +81,7 @@ to the account storage array and all subsequent accesses to the account (not dec
 <code>#[account(init)]</code>) will check for this discriminator.</p></details> <h3 id="update-instruction"><a href="#update-instruction" class="header-anchor">#</a> <code>update</code> instruction</h3> <p>Similarly, the <code>Update</code> accounts struct is marked  with the <code>#[account(mut)]</code> attribute.
 Marking an account as <code>mut</code> persists any changes made upon exiting the program.</p> <p>Here we've covered the basics of how to interact with accounts. In a later tutorial,
 we'll delve more deeply into deriving <code>Accounts</code>, but for now, just know
-one must mark their accounts <code>init</code> when using an account for the first time and <code>mut</code>
+you must mark an account <code>init</code> when using it for the first time and <code>mut</code>
 for persisting changes.</p> <h2 id="creating-and-initializing-accounts"><a href="#creating-and-initializing-accounts" class="header-anchor">#</a> Creating and Initializing Accounts</h2> <p>For a moment, assume an account of type <code>MyAccount</code> was created on Solana, in which case,
 we can invoke the above <code>initialize</code> instruction as follows.</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">await</span> program<span class="token punctuation">.</span>rpc<span class="token punctuation">.</span><span class="token function">initialize</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">anchor<span class="token punctuation">.</span>BN</span><span class="token punctuation">(</span><span class="token number">1234</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
   accounts<span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -118,7 +118,7 @@ and initialize it in one atomic transaction.</p> <div class="language-js extra-c
   <span class="token punctuation">]</span><span class="token punctuation">,</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// Fetch the newly created account from the cluster.</span>
-<span class="token keyword">const</span> account <span class="token operator">=</span> <span class="token keyword">await</span> program<span class="token punctuation">.</span>account<span class="token punctuation">.</span><span class="token function">myAccount</span><span class="token punctuation">(</span>myAccount<span class="token punctuation">.</span>publicKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> account <span class="token operator">=</span> <span class="token keyword">await</span> program<span class="token punctuation">.</span>account<span class="token punctuation">.</span>myAccount<span class="token punctuation">.</span><span class="token function">fetch</span><span class="token punctuation">(</span>myAccount<span class="token punctuation">.</span>publicKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// Check it's state was initialized.</span>
 assert<span class="token punctuation">.</span><span class="token function">ok</span><span class="token punctuation">(</span>account<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">eq</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">anchor<span class="token punctuation">.</span>BN</span><span class="token punctuation">(</span><span class="token number">1234</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div><p>Here, notice the <strong>two</strong> fields introduced: <code>signers</code> and <code>instructions</code>. <code>signers</code>
 is an array of all <code>Account</code> objects to sign the transaction and <code>instructions</code> is an
@@ -143,6 +143,6 @@ and access control. We'll cover that next.</p></div> <footer class="page-edit"><
       </a>
       →
     </span></p></div> </main></div><div class="global-ui"></div></div>
-    <script src="/anchor/assets/js/app.96256695.js" defer></script><script src="/anchor/assets/js/2.642364e0.js" defer></script><script src="/anchor/assets/js/14.2bdb63f3.js" defer></script>
+    <script src="/anchor/assets/js/app.0afa5815.js" defer></script><script src="/anchor/assets/js/2.642364e0.js" defer></script><script src="/anchor/assets/js/14.588ded0b.js" defer></script>
   </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>FeeCalculator | @project-serum/anchor - v0.8.0</title>
+	<title>Ed25519Keypair | @project-serum/anchor - v0.8.0</title>
 	<meta name="description" content="Documentation for @project-serum/anchor - v0.8.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -58,10 +58,10 @@
 					<a href="../modules/web3.html">web3</a>
 				</li>
 				<li>
-					<a href="web3.feecalculator.html">FeeCalculator</a>
+					<a href="web3.ed25519keypair.html">Ed25519Keypair</a>
 				</li>
 			</ul>
-			<h1>Interface FeeCalculator</h1>
+			<h1>Interface Ed25519Keypair</h1>
 		</div>
 	</div>
 </header>
@@ -71,7 +71,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Calculator for transaction fees.</p>
+						<p>Ed25519 Keypair</p>
 					</div>
 				</div>
 			</section>
@@ -79,7 +79,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">FeeCalculator</span>
+						<span class="target">Ed25519Keypair</span>
 					</li>
 				</ul>
 			</section>
@@ -90,7 +90,8 @@
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="web3.feecalculator.html#lamportspersignature" class="tsd-kind-icon">lamports<wbr>Per<wbr>Signature</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="web3.ed25519keypair.html#publickey" class="tsd-kind-icon">public<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="web3.ed25519keypair.html#secretkey" class="tsd-kind-icon">secret<wbr>Key</a></li>
 							</ul>
 						</section>
 					</div>
@@ -99,19 +100,24 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="lamportspersignature" class="tsd-anchor"></a>
-					<h3>lamports<wbr>Per<wbr>Signature</h3>
-					<div class="tsd-signature tsd-kind-icon">lamports<wbr>Per<wbr>Signature<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="publickey" class="tsd-anchor"></a>
+					<h3>public<wbr>Key</h3>
+					<div class="tsd-signature tsd-kind-icon">public<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in node_modules/@solana/web3.js/lib/index.d.ts:129</li>
+							<li>Defined in node_modules/@solana/web3.js/lib/index.d.ts:162</li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Cost in lamports to validate a signature.</p>
-						</div>
-					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
+					<a name="secretkey" class="tsd-anchor"></a>
+					<h3>secret<wbr>Key</h3>
+					<div class="tsd-signature tsd-kind-icon">secret<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in node_modules/@solana/web3.js/lib/index.d.ts:163</li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -143,10 +149,13 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-namespace tsd-is-external">
-						<a href="web3.feecalculator.html" class="tsd-kind-icon">Fee<wbr>Calculator</a>
+						<a href="web3.ed25519keypair.html" class="tsd-kind-icon">Ed25519<wbr>Keypair</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="web3.feecalculator.html#lamportspersignature" class="tsd-kind-icon">lamports<wbr>Per<wbr>Signature</a>
+								<a href="web3.ed25519keypair.html#publickey" class="tsd-kind-icon">public<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
+								<a href="web3.ed25519keypair.html#secretkey" class="tsd-kind-icon">secret<wbr>Key</a>
 							</li>
 						</ul>
 					</li>

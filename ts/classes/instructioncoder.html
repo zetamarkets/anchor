@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>InstructionCoder | @project-serum/anchor - v0.7.0</title>
-	<meta name="description" content="Documentation for @project-serum/anchor - v0.7.0">
+	<title>InstructionCoder | @project-serum/anchor - v0.8.0</title>
+	<meta name="description" content="Documentation for @project-serum/anchor - v0.8.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 	<script async src="../assets/js/search.js" id="search-script"></script>
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@project-serum/anchor - v0.7.0</a>
+					<a href="../index.html" class="title">@project-serum/anchor - v0.8.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -52,7 +52,7 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../index.html">@project-serum/anchor - v0.7.0</a>
+					<a href="../index.html">@project-serum/anchor - v0.8.0</a>
 				</li>
 				<li>
 					<a href="instructioncoder.html">InstructionCoder</a>
@@ -93,8 +93,10 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="instructioncoder.html#decode" class="tsd-kind-icon">decode</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="instructioncoder.html#encode" class="tsd-kind-icon">encode</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="instructioncoder.html#encodestate" class="tsd-kind-icon">encode<wbr>State</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="instructioncoder.html#format" class="tsd-kind-icon">format</a></li>
 							</ul>
 						</section>
 					</div>
@@ -112,7 +114,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/a8fd1e0/ts/src/coder/instruction.ts#L25">src/coder/instruction.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/19e34ea/ts/src/coder/instruction.ts#L36">src/coder/instruction.ts:36</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -129,6 +131,34 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="decode" class="tsd-anchor"></a>
+					<h3>decode</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>ix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../index.html#instruction" class="tsd-signature-type" data-tsd-kind="Type alias">Instruction</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/19e34ea/ts/src/coder/instruction.ts#L112">src/coder/instruction.ts:112</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Dewcodes a program instruction.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ix: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../index.html#instruction" class="tsd-signature-type" data-tsd-kind="Type alias">Instruction</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="encode" class="tsd-anchor"></a>
 					<h3>encode</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -138,7 +168,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/a8fd1e0/ts/src/coder/instruction.ts#L34">src/coder/instruction.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/19e34ea/ts/src/coder/instruction.ts#L66">src/coder/instruction.ts:66</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -169,7 +199,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/a8fd1e0/ts/src/coder/instruction.ts#L41">src/coder/instruction.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/19e34ea/ts/src/coder/instruction.ts#L73">src/coder/instruction.ts:73</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -187,6 +217,37 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Buffer</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="format" class="tsd-anchor"></a>
+					<h3>format</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">format<span class="tsd-signature-symbol">(</span>ix<span class="tsd-signature-symbol">: </span><a href="../index.html#instruction" class="tsd-signature-type" data-tsd-kind="Type alias">Instruction</a>, accountMetas<span class="tsd-signature-symbol">: </span><a href="../modules/web3.html#accountmeta" class="tsd-signature-type" data-tsd-kind="Type alias">AccountMeta</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">InstructionDisplay</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/project-serum/anchor/blob/19e34ea/ts/src/coder/instruction.ts#L131">src/coder/instruction.ts:131</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns a formatted table of all the fields in the given instruction data.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ix: <a href="../index.html#instruction" class="tsd-signature-type" data-tsd-kind="Type alias">Instruction</a></h5>
+								</li>
+								<li>
+									<h5>accountMetas: <a href="../modules/web3.html#accountmeta" class="tsd-signature-type" data-tsd-kind="Type alias">AccountMeta</a><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">InstructionDisplay</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -223,10 +284,16 @@
 								<a href="instructioncoder.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="instructioncoder.html#decode" class="tsd-kind-icon">decode</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="instructioncoder.html#encode" class="tsd-kind-icon">encode</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="instructioncoder.html#encodestate" class="tsd-kind-icon">encode<wbr>State</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="instructioncoder.html#format" class="tsd-kind-icon">format</a>
 							</li>
 						</ul>
 					</li>
@@ -279,6 +346,9 @@
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../index.html#idl" class="tsd-kind-icon">Idl</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../index.html#instruction" class="tsd-kind-icon">Instruction</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../index.html#instructionfn" class="tsd-kind-icon">Instruction<wbr>Fn</a>
