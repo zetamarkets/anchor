@@ -9,7 +9,7 @@
     <meta name="theme-color" content="#3eaf7c">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="preload" href="/anchor/assets/css/0.styles.3c0a719b.css" as="style"><link rel="preload" href="/anchor/assets/js/app.0afa5815.js" as="script"><link rel="preload" href="/anchor/assets/js/2.642364e0.js" as="script"><link rel="preload" href="/anchor/assets/js/14.588ded0b.js" as="script"><link rel="prefetch" href="/anchor/assets/js/10.f72374e0.js"><link rel="prefetch" href="/anchor/assets/js/11.fcfd5ead.js"><link rel="prefetch" href="/anchor/assets/js/12.2925ea6f.js"><link rel="prefetch" href="/anchor/assets/js/13.1d10da54.js"><link rel="prefetch" href="/anchor/assets/js/15.ad022960.js"><link rel="prefetch" href="/anchor/assets/js/16.944d8497.js"><link rel="prefetch" href="/anchor/assets/js/17.ef09cdf2.js"><link rel="prefetch" href="/anchor/assets/js/18.219073f0.js"><link rel="prefetch" href="/anchor/assets/js/19.1fd7ca23.js"><link rel="prefetch" href="/anchor/assets/js/3.60832a0f.js"><link rel="prefetch" href="/anchor/assets/js/4.95ec17ab.js"><link rel="prefetch" href="/anchor/assets/js/5.7ec961d8.js"><link rel="prefetch" href="/anchor/assets/js/6.17d5dd20.js"><link rel="prefetch" href="/anchor/assets/js/7.33a5751e.js"><link rel="prefetch" href="/anchor/assets/js/8.321f27e6.js"><link rel="prefetch" href="/anchor/assets/js/9.f522ea37.js">
+    <link rel="preload" href="/anchor/assets/css/0.styles.3c0a719b.css" as="style"><link rel="preload" href="/anchor/assets/js/app.d6a5af62.js" as="script"><link rel="preload" href="/anchor/assets/js/2.642364e0.js" as="script"><link rel="preload" href="/anchor/assets/js/14.66a52e35.js" as="script"><link rel="prefetch" href="/anchor/assets/js/10.c9152663.js"><link rel="prefetch" href="/anchor/assets/js/11.c7c72fff.js"><link rel="prefetch" href="/anchor/assets/js/12.8ca4b028.js"><link rel="prefetch" href="/anchor/assets/js/13.ad628bf4.js"><link rel="prefetch" href="/anchor/assets/js/15.ad022960.js"><link rel="prefetch" href="/anchor/assets/js/16.b9e9e0b5.js"><link rel="prefetch" href="/anchor/assets/js/17.ef09cdf2.js"><link rel="prefetch" href="/anchor/assets/js/18.bcf27d66.js"><link rel="prefetch" href="/anchor/assets/js/19.fafffd02.js"><link rel="prefetch" href="/anchor/assets/js/3.60832a0f.js"><link rel="prefetch" href="/anchor/assets/js/4.95ec17ab.js"><link rel="prefetch" href="/anchor/assets/js/5.7ec961d8.js"><link rel="prefetch" href="/anchor/assets/js/6.17d5dd20.js"><link rel="prefetch" href="/anchor/assets/js/7.33a5751e.js"><link rel="prefetch" href="/anchor/assets/js/8.321f27e6.js"><link rel="prefetch" href="/anchor/assets/js/9.f522ea37.js">
     <link rel="stylesheet" href="/anchor/assets/css/0.styles.3c0a719b.css">
   </head>
   <body>
@@ -70,7 +70,7 @@ in one situation: when a given <code>ProgramAccount</code> is newly created and 
 for the first time (and thus its data field is all zero). If <code>#[account(init)]</code> is not used
 when account data is zero initialized, the transaction will be rejected.</li> <li>The <code>Rent</code> <strong>sysvar</strong> is required for the rent exemption check, which the framework enforces
 by default for any account marked with <code>#[account(init)]</code>. To be more explicit about the check,
-one can specify <code>#[account(init, rent_exempt)]</code>. To skip this check, (and thus
+one can specify <code>#[account(init, rent_exempt = enforce)]</code>. To skip this check, (and thus
 allowing you to omit the <code>Rent</code> acccount), you can specify
 <code>#[account(init, rent_exempt = skip)]</code> on the account being initialized (here, <code>my_account</code>).</li></ol> <details class="custom-block details"><summary>DETAILS</summary> <p>All accounts created with Anchor are laid out as follows: <code>8-byte-discriminator || borsh serialized data</code>. The 8-byte-discriminator is created from the first 8 bytes of the
 <code>Sha256</code> hash of the account's type--using the example above, <code>sha256(&quot;MyAccount&quot;)[..8]</code>.</p> <p>Importantly, this allows a program to know for certain an account is indeed of a given type.
@@ -143,6 +143,6 @@ and access control. We'll cover that next.</p></div> <footer class="page-edit"><
       </a>
       →
     </span></p></div> </main></div><div class="global-ui"></div></div>
-    <script src="/anchor/assets/js/app.0afa5815.js" defer></script><script src="/anchor/assets/js/2.642364e0.js" defer></script><script src="/anchor/assets/js/14.588ded0b.js" defer></script>
+    <script src="/anchor/assets/js/app.d6a5af62.js" defer></script><script src="/anchor/assets/js/2.642364e0.js" defer></script><script src="/anchor/assets/js/14.66a52e35.js" defer></script>
   </body>
 </html>
