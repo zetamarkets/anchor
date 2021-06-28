@@ -149,6 +149,19 @@ pub enum Command {
         /// The name of the script to run.
         script: String,
     },
+    /// Generates a client for the given language.
+    ClientGen {
+        #[clap(long)]
+        java: bool,
+        #[clap(long)]
+        swift: bool,
+        /// Filepath to the IDL
+        #[clap(short, long)]
+        idl: String,
+        /// Filepath to the generated client output
+        #[clap(short, long)]
+        out: String,
+    },
 }
 
 #[derive(Debug, Clap)]
@@ -268,6 +281,12 @@ fn main() -> Result<()> {
         Command::Cluster { subcmd } => cluster(subcmd),
         Command::Shell => shell(&opts.cfg_override),
         Command::Run { script } => run(&opts.cfg_override, script),
+        Command::ClientGen {
+            java,
+            swift,
+            idl,
+            out,
+        } => client_gen(&opts.cfg_override, java, swift, idl, out),
     }
 }
 
@@ -1656,6 +1675,38 @@ fn run(cfg_override: &ConfigOverride, script: String) -> Result<()> {
         }
         Ok(())
     })
+}
+
+fn client_gen(
+    cfg_override: &ConfigOverride,
+    java: bool,
+    swift: bool,
+    idl: String,
+    out: String,
+) -> Result<()> {
+    let mut file = File::open(&idl)?;
+    let mut contents = vec![];
+    file.read_to_end(&mut contents)?;
+    let idl: Idl = serde_json::from_slice(&contents)?;
+    if java {
+        gen_java(&idl, &out)?;
+    }
+    if swift {
+        gen_swift(&idl, &out)?;
+    }
+    Ok(())
+}
+
+fn gen_java(idl: &Idl, out: &str) -> Result<()> {
+    // todo: generate a template string and write to the output file
+    println!("Generating a .java file");
+    Ok(())
+}
+
+fn gen_swift(idl: &Idl, out: &str) -> Result<()> {
+    // todo: generate a template string and write to the output file
+    println!("Generating a .swift file");
+    Ok(())
 }
 
 // with_workspace ensures the current working directory is always the top level
