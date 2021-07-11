@@ -119,9 +119,9 @@ pub fn parse_token(stream: ParseStream) -> ParseResult<ConstraintToken> {
                         target: stream.parse()?,
                     },
                 )),
-                "payer" => ConstraintToken::AssociatedPayer(Context::new(
+                "payer" => ConstraintToken::Payer(Context::new(
                     span,
-                    ConstraintAssociatedPayer {
+                    ConstraintPayer {
                         target: stream.parse()?,
                     },
                 )),
@@ -131,9 +131,9 @@ pub fn parse_token(stream: ParseStream) -> ParseResult<ConstraintToken> {
                         target: stream.parse()?,
                     },
                 )),
-                "space" => ConstraintToken::AssociatedSpace(Context::new(
+                "space" => ConstraintToken::Space(Context::new(
                     span,
-                    ConstraintAssociatedSpace {
+                    ConstraintSpace {
                         space: stream.parse()?,
                     },
                 )),
@@ -207,8 +207,8 @@ pub struct ConstraintGroupBuilder<'ty> {
     pub executable: Option<Context<ConstraintExecutable>>,
     pub state: Option<Context<ConstraintState>>,
     pub associated: Option<Context<ConstraintAssociated>>,
-    pub associated_payer: Option<Context<ConstraintAssociatedPayer>>,
-    pub associated_space: Option<Context<ConstraintAssociatedSpace>>,
+    pub associated_payer: Option<Context<ConstraintPayer>>,
+    pub associated_space: Option<Context<ConstraintSpace>>,
     pub associated_with: Vec<Context<ConstraintAssociatedWith>>,
     pub close: Option<Context<ConstraintClose>>,
     pub address: Option<Context<ConstraintAddress>>,
@@ -258,10 +258,6 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
                     .mutable
                     .replace(Context::new(i.span(), ConstraintMut {})),
             };
-            if self.rent_exempt.is_none() {
-                self.rent_exempt
-                    .replace(Context::new(i.span(), ConstraintRentExempt::Enforce));
-            }
         }
 
         if let Some(z) = &self.zeroed {
@@ -425,9 +421,9 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
             ConstraintToken::Executable(c) => self.add_executable(c),
             ConstraintToken::State(c) => self.add_state(c),
             ConstraintToken::Associated(c) => self.add_associated(c),
-            ConstraintToken::AssociatedPayer(c) => self.add_associated_payer(c),
-            ConstraintToken::AssociatedSpace(c) => self.add_associated_space(c),
             ConstraintToken::AssociatedWith(c) => self.add_associated_with(c),
+            ConstraintToken::Payer(c) => self.add_associated_payer(c),
+            ConstraintToken::Space(c) => self.add_associated_space(c),
             ConstraintToken::Close(c) => self.add_close(c),
             ConstraintToken::Address(c) => self.add_address(c),
             ConstraintToken::TokenAuthority(c) => self.add_token_authority(c),
@@ -633,11 +629,11 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
         Ok(())
     }
 
-    fn add_associated_payer(&mut self, c: Context<ConstraintAssociatedPayer>) -> ParseResult<()> {
-        if self.associated.is_none() && self.seeds.is_none() {
+    fn add_associated_payer(&mut self, c: Context<ConstraintPayer>) -> ParseResult<()> {
+        if self.init.is_none() {
             return Err(ParseError::new(
                 c.span(),
-                "associated or seeds must be provided before payer",
+                "init must be provided before payer",
             ));
         }
         if self.associated_payer.is_some() {
@@ -647,11 +643,11 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
         Ok(())
     }
 
-    fn add_associated_space(&mut self, c: Context<ConstraintAssociatedSpace>) -> ParseResult<()> {
-        if self.associated.is_none() && self.seeds.is_none() {
+    fn add_associated_space(&mut self, c: Context<ConstraintSpace>) -> ParseResult<()> {
+        if self.init.is_none() {
             return Err(ParseError::new(
                 c.span(),
-                "associated or seeds must be provided before space",
+                "init must be provided before space",
             ));
         }
         if self.associated_space.is_some() {

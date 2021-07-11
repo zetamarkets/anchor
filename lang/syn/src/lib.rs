@@ -342,8 +342,8 @@ pub enum ConstraintToken {
     State(Context<ConstraintState>),
     Close(Context<ConstraintClose>),
     Associated(Context<ConstraintAssociated>),
-    AssociatedPayer(Context<ConstraintAssociatedPayer>),
-    AssociatedSpace(Context<ConstraintAssociatedSpace>),
+    Payer(Context<ConstraintPayer>),
+    Space(Context<ConstraintSpace>),
     AssociatedWith(Context<ConstraintAssociatedWith>),
     Address(Context<ConstraintAddress>),
     TokenMint(Context<ConstraintTokenMint>),
@@ -439,7 +439,7 @@ pub struct ConstraintAssociated {
 }
 
 #[derive(Debug, Clone)]
-pub struct ConstraintAssociatedPayer {
+pub struct ConstraintPayer {
     pub target: Ident,
 }
 
@@ -449,7 +449,7 @@ pub struct ConstraintAssociatedWith {
 }
 
 #[derive(Debug, Clone)]
-pub struct ConstraintAssociatedSpace {
+pub struct ConstraintSpace {
     pub space: Expr,
 }
 

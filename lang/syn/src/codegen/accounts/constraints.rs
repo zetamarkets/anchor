@@ -625,8 +625,6 @@ pub fn generate_pda(
                         e
                     })?;
 
-                    // For now, we assume all accounts created with the `associated`
-                    // attribute have a `nonce` field in their account.
                     let mut pa: #combined_account_ty = #try_from;
 
                     #nonce_assignment

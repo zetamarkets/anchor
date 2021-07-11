@@ -143,6 +143,19 @@ pub mod misc {
         Ok(())
     }
 
+    pub fn test_init_aux_account(ctx: Context<TestInitAuxAccount>, input: u16) -> ProgramResult {
+        ctx.accounts.my_account.data = input;
+        Ok(())
+    }
+
+    pub fn test_init_aux_account_size(
+        ctx: Context<TestInitAuxAccountSize>,
+        input: u16,
+    ) -> ProgramResult {
+        ctx.accounts.my_account.data = input;
+        Ok(())
+    }
+
     pub fn default<'info>(
         _program_id: &Pubkey,
         _accounts: &[AccountInfo<'info>],
@@ -209,6 +222,24 @@ pub struct TestPdaMutZeroCopy<'info> {
     #[account(mut, seeds = [b"my-seed".as_ref(), &[my_pda.load()?.bump]])]
     my_pda: Loader<'info, DataZeroCopy>,
     my_payer: AccountInfo<'info>,
+}
+
+#[derive(Accounts)]
+pub struct TestInitAuxAccount<'info> {
+    //    #[account(init, payer = my_payer)]
+    my_account: ProgramAccount<'info, DataU16>,
+    my_payer: AccountInfo<'info>,
+    rent: Sysvar<'info, Rent>,
+    system_program: AccountInfo<'info>,
+}
+
+#[derive(Accounts)]
+pub struct TestInitAuxAccountSize<'info> {
+    //    #[account(init, payer = my_payer, size = 100)]
+    my_account: ProgramAccount<'info, DataU16>,
+    my_payer: AccountInfo<'info>,
+    rent: Sysvar<'info, Rent>,
+    system_program: AccountInfo<'info>,
 }
 
 #[derive(Accounts)]
