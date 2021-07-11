@@ -219,7 +219,7 @@ pub struct RemainingAccounts {}
 
 #[derive(Accounts)]
 pub struct Initialize<'info> {
-    #[account(init)]
+    #[account(zeroed)]
     data: ProgramAccount<'info, Data>,
     rent: Sysvar<'info, Rent>,
 }
@@ -287,14 +287,14 @@ pub struct TestAssociatedAccount<'info> {
 
 #[derive(Accounts)]
 pub struct TestU16<'info> {
-    #[account(init)]
+    #[account(zeroed)]
     my_account: ProgramAccount<'info, DataU16>,
     rent: Sysvar<'info, Rent>,
 }
 
 #[derive(Accounts)]
 pub struct TestI16<'info> {
-    #[account(init)]
+    #[account(zeroed)]
     data: ProgramAccount<'info, DataI16>,
     rent: Sysvar<'info, Rent>,
 }
@@ -314,7 +314,7 @@ pub struct TestSimulateAssociatedAccount<'info> {
 
 #[derive(Accounts)]
 pub struct TestI8<'info> {
-    #[account(init)]
+    #[account(zeroed)]
     data: ProgramAccount<'info, DataI8>,
     rent: Sysvar<'info, Rent>,
 }
