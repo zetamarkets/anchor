@@ -112,21 +112,9 @@ pub fn parse_token(stream: ParseStream) -> ParseResult<ConstraintToken> {
                         program_target: stream.parse()?,
                     },
                 )),
-                "associated" => ConstraintToken::Associated(Context::new(
-                    span,
-                    ConstraintAssociated {
-                        target: stream.parse()?,
-                    },
-                )),
                 "payer" => ConstraintToken::AssociatedPayer(Context::new(
                     span,
                     ConstraintAssociatedPayer {
-                        target: stream.parse()?,
-                    },
-                )),
-                "with" => ConstraintToken::AssociatedWith(Context::new(
-                    span,
-                    ConstraintAssociatedWith {
                         target: stream.parse()?,
                     },
                 )),
@@ -204,10 +192,8 @@ pub struct ConstraintGroupBuilder<'ty> {
     pub seeds: Option<Context<ConstraintSeeds>>,
     pub executable: Option<Context<ConstraintExecutable>>,
     pub state: Option<Context<ConstraintState>>,
-    pub associated: Option<Context<ConstraintAssociated>>,
     pub associated_payer: Option<Context<ConstraintAssociatedPayer>>,
     pub associated_space: Option<Context<ConstraintAssociatedSpace>>,
-    pub associated_with: Vec<Context<ConstraintAssociatedWith>>,
     pub close: Option<Context<ConstraintClose>>,
     pub address: Option<Context<ConstraintAddress>>,
     pub token_mint: Option<Context<ConstraintTokenMint>>,
@@ -230,10 +216,8 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
             seeds: None,
             executable: None,
             state: None,
-            associated: None,
             associated_payer: None,
             associated_space: None,
-            associated_with: Vec::new(),
             close: None,
             address: None,
             token_mint: None,
@@ -270,7 +254,7 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
         }
 
         if let Some(token_mint) = &self.token_mint {
-            if self.init.is_none() || (self.associated.is_none() && self.seeds.is_none()) {
+            if self.init.is_none() || self.seeds.is_none() {
                 return Err(ParseError::new(
                     token_mint.span(),
                     "init is required for a pda token",
@@ -291,10 +275,8 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
             seeds,
             executable,
             state,
-            associated,
             associated_payer,
             associated_space,
-            associated_with,
             close,
             address,
             token_mint,
@@ -319,7 +301,7 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
         }
 
         let (owner, pda_owner) = {
-            if seeds.is_some() || associated.is_some() {
+            if seeds.is_some() {
                 (None, owner.map(|o| o.owner_target.clone()))
             } else {
                 (owner, None)
@@ -364,23 +346,6 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
                 .transpose()?,
             executable: into_inner!(executable),
             state: into_inner!(state),
-            associated: associated.map(|associated| ConstraintAssociatedGroup {
-                is_init,
-                associated_target: associated.target.clone(),
-                associated_seeds: associated_with.iter().map(|s| s.target.clone()).collect(),
-                payer: associated_payer.map(|p| p.target.clone()),
-                space: associated_space.map(|s| s.space.clone()),
-                kind: match token_mint {
-                    None => PdaKind::Program { owner: pda_owner },
-                    Some(tm) => PdaKind::Token {
-                        mint: tm.into_inner().mint,
-                        owner: match token_authority {
-                            Some(a) => a.into_inner().auth,
-                            None => associated.target.clone(),
-                        },
-                    },
-                },
-            }),
             close: into_inner!(close),
             address: into_inner!(address),
         })
@@ -399,10 +364,8 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
             ConstraintToken::Seeds(c) => self.add_seeds(c),
             ConstraintToken::Executable(c) => self.add_executable(c),
             ConstraintToken::State(c) => self.add_state(c),
-            ConstraintToken::Associated(c) => self.add_associated(c),
             ConstraintToken::AssociatedPayer(c) => self.add_associated_payer(c),
             ConstraintToken::AssociatedSpace(c) => self.add_associated_space(c),
-            ConstraintToken::AssociatedWith(c) => self.add_associated_with(c),
             ConstraintToken::Close(c) => self.add_close(c),
             ConstraintToken::Address(c) => self.add_address(c),
             ConstraintToken::TokenAuthority(c) => self.add_token_authority(c),
@@ -554,12 +517,6 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
         if self.seeds.is_some() {
             return Err(ParseError::new(c.span(), "seeds already provided"));
         }
-        if self.associated.is_some() {
-            return Err(ParseError::new(
-                c.span(),
-                "both seeds and associated cannot be defined together",
-            ));
-        }
         self.seeds.replace(c);
         Ok(())
     }
@@ -580,22 +537,8 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
         Ok(())
     }
 
-    fn add_associated(&mut self, c: Context<ConstraintAssociated>) -> ParseResult<()> {
-        if self.associated.is_some() {
-            return Err(ParseError::new(c.span(), "associated already provided"));
-        }
-        if self.seeds.is_some() {
-            return Err(ParseError::new(
-                c.span(),
-                "both seeds and associated cannot be defined together",
-            ));
-        }
-        self.associated.replace(c);
-        Ok(())
-    }
-
     fn add_associated_payer(&mut self, c: Context<ConstraintAssociatedPayer>) -> ParseResult<()> {
-        if self.associated.is_none() && self.seeds.is_none() {
+        if self.seeds.is_none() {
             return Err(ParseError::new(
                 c.span(),
                 "associated or seeds must be provided before payer",
@@ -609,7 +552,7 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
     }
 
     fn add_associated_space(&mut self, c: Context<ConstraintAssociatedSpace>) -> ParseResult<()> {
-        if self.associated.is_none() && self.seeds.is_none() {
+        if self.seeds.is_none() {
             return Err(ParseError::new(
                 c.span(),
                 "associated or seeds must be provided before space",
@@ -619,17 +562,6 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
             return Err(ParseError::new(c.span(), "space already provided"));
         }
         self.associated_space.replace(c);
-        Ok(())
-    }
-
-    fn add_associated_with(&mut self, c: Context<ConstraintAssociatedWith>) -> ParseResult<()> {
-        if self.associated.is_none() {
-            return Err(ParseError::new(
-                c.span(),
-                "associated must be provided before with",
-            ));
-        }
-        self.associated_with.push(c);
         Ok(())
     }
 }

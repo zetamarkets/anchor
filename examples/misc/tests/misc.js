@@ -135,89 +135,6 @@ describe("misc", () => {
     assert.ok(stateAccount.auth.equals(program.provider.wallet.publicKey));
   });
 
-  it("Can init an associated program account", async () => {
-    const state = await program.state.address();
-
-    // Manual associated address calculation for test only. Clients should use
-    // the generated methods.
-    const [
-      associatedAccount,
-      nonce,
-    ] = await anchor.web3.PublicKey.findProgramAddress(
-      [
-        anchor.utils.bytes.utf8.encode("anchor"),
-        program.provider.wallet.publicKey.toBuffer(),
-        state.toBuffer(),
-        data.publicKey.toBuffer(),
-        anchor.utils.bytes.utf8.encode("my-seed"),
-      ],
-      program.programId
-    );
-    await assert.rejects(
-      async () => {
-        await program.account.testData.fetch(associatedAccount);
-      },
-      (err) => {
-        assert.ok(
-          err.toString() ===
-            `Error: Account does not exist ${associatedAccount.toString()}`
-        );
-        return true;
-      }
-    );
-    await program.rpc.testInitAssociatedAccount(new anchor.BN(1234), {
-      accounts: {
-        myAccount: associatedAccount,
-        authority: program.provider.wallet.publicKey,
-        state,
-        data: data.publicKey,
-        rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-        systemProgram: anchor.web3.SystemProgram.programId,
-      },
-    });
-    // Try out the generated associated method.
-    const account = await program.account.testData.associated(
-      program.provider.wallet.publicKey,
-      state,
-      data.publicKey,
-      anchor.utils.bytes.utf8.encode("my-seed")
-    );
-    assert.ok(account.data.toNumber() === 1234);
-  });
-
-  it("Can use an associated program account", async () => {
-    const state = await program.state.address();
-    const [
-      associatedAccount,
-      nonce,
-    ] = await anchor.web3.PublicKey.findProgramAddress(
-      [
-        anchor.utils.bytes.utf8.encode("anchor"),
-        program.provider.wallet.publicKey.toBuffer(),
-        state.toBuffer(),
-        data.publicKey.toBuffer(),
-        anchor.utils.bytes.utf8.encode("my-seed"),
-      ],
-      program.programId
-    );
-    await program.rpc.testAssociatedAccount(new anchor.BN(5), {
-      accounts: {
-        myAccount: associatedAccount,
-        authority: program.provider.wallet.publicKey,
-        state,
-        data: data.publicKey,
-      },
-    });
-    // Try out the generated associated method.
-    const account = await program.account.testData.associated(
-      program.provider.wallet.publicKey,
-      state,
-      data.publicKey,
-      anchor.utils.bytes.utf8.encode("my-seed")
-    );
-    assert.ok(account.data.toNumber() === 5);
-  });
-
   it("Can retrieve events when simulating a transaction", async () => {
     const resp = await program.simulate.testSimulate(44);
     const expectedRaw = [
@@ -239,8 +156,9 @@ describe("misc", () => {
   });
 
   it("Can retrieve events when associated account is initialized in simulated transaction", async () => {
-    const myAccount = await program.account.testData.associatedAddress(
-      program.provider.wallet.publicKey
+		const [myAccount, bump] = await PublicKey.findProgramAddress(
+			[program.provider.wallet.publicKey.toBuffer()],
+			program.programId,
     );
     await assert.rejects(
       async () => {
@@ -255,7 +173,7 @@ describe("misc", () => {
       }
     );
 
-    const resp = await program.simulate.testSimulateAssociatedAccount(44, {
+		const resp = await program.simulate.testSimulateBumpAccount(bump, 44, {
       accounts: {
         myAccount,
         authority: program.provider.wallet.publicKey,

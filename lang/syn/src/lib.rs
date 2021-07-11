@@ -270,7 +270,6 @@ pub struct ConstraintGroup {
     seeds: Option<ConstraintSeedsGroup>,
     executable: Option<ConstraintExecutable>,
     state: Option<ConstraintState>,
-    associated: Option<ConstraintAssociatedGroup>,
     has_one: Vec<ConstraintHasOne>,
     literal: Vec<ConstraintLiteral>,
     raw: Vec<ConstraintRaw>,
@@ -297,8 +296,8 @@ impl ConstraintGroup {
 }
 
 // A single account constraint *after* merging all tokens into a well formed
-// constraint. Some constraints like "associated" are defined by multiple
-// tokens, so a merging phase is required.
+// constraint. Some constraints are defined by multiple tokens, so a merging
+// phase is required.
 #[allow(clippy::large_enum_variant)]
 #[derive(Debug)]
 pub enum Constraint {
@@ -313,7 +312,6 @@ pub enum Constraint {
     Seeds(ConstraintSeedsGroup),
     Executable(ConstraintExecutable),
     State(ConstraintState),
-    AssociatedGroup(ConstraintAssociatedGroup),
     Close(ConstraintClose),
     Address(ConstraintAddress),
 }
@@ -334,10 +332,8 @@ pub enum ConstraintToken {
     Executable(Context<ConstraintExecutable>),
     State(Context<ConstraintState>),
     Close(Context<ConstraintClose>),
-    Associated(Context<ConstraintAssociated>),
     AssociatedPayer(Context<ConstraintAssociatedPayer>),
     AssociatedSpace(Context<ConstraintAssociatedSpace>),
-    AssociatedWith(Context<ConstraintAssociatedWith>),
     Address(Context<ConstraintAddress>),
     TokenMint(Context<ConstraintTokenMint>),
     TokenAuthority(Context<ConstraintTokenAuthority>),
@@ -414,28 +410,8 @@ pub struct ConstraintState {
 }
 
 #[derive(Debug, Clone)]
-pub struct ConstraintAssociatedGroup {
-    pub is_init: bool,
-    pub associated_target: Expr,
-    pub associated_seeds: Vec<Expr>,
-    pub payer: Option<Ident>,
-    pub space: Option<Expr>,
-    pub kind: PdaKind,
-}
-
-#[derive(Debug, Clone)]
-pub struct ConstraintAssociated {
-    pub target: Expr,
-}
-
-#[derive(Debug, Clone)]
 pub struct ConstraintAssociatedPayer {
     pub target: Ident,
-}
-
-#[derive(Debug, Clone)]
-pub struct ConstraintAssociatedWith {
-    pub target: Expr,
 }
 
 #[derive(Debug, Clone)]

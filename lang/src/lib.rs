@@ -56,7 +56,7 @@ pub use crate::program_account::ProgramAccount;
 pub use crate::state::ProgramState;
 pub use crate::sysvar::Sysvar;
 pub use anchor_attribute_access_control::access_control;
-pub use anchor_attribute_account::{account, associated, zero_copy};
+pub use anchor_attribute_account::{account, zero_copy};
 pub use anchor_attribute_error::error;
 pub use anchor_attribute_event::{emit, event};
 pub use anchor_attribute_interface::interface;
@@ -233,10 +233,10 @@ impl Key for Pubkey {
 /// All programs should include it via `anchor_lang::prelude::*;`.
 pub mod prelude {
     pub use super::{
-        access_control, account, associated, emit, error, event, interface, program, require,
-        state, zero_copy, AccountDeserialize, AccountSerialize, Accounts, AccountsExit,
-        AccountsInit, AnchorDeserialize, AnchorSerialize, Context, CpiAccount, CpiContext,
-        CpiState, CpiStateContext, Loader, ProgramAccount, ProgramState, Sysvar, ToAccountInfo,
+        access_control, account, emit, error, event, interface, program, require, state, zero_copy,
+        AccountDeserialize, AccountSerialize, Accounts, AccountsExit, AccountsInit,
+        AnchorDeserialize, AnchorSerialize, Context, CpiAccount, CpiContext, CpiState,
+        CpiStateContext, Loader, ProgramAccount, ProgramState, Sysvar, ToAccountInfo,
         ToAccountInfos, ToAccountMetas,
     };
 

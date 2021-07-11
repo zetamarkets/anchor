@@ -53,22 +53,6 @@ pub mod misc {
         misc2::cpi::state::set_data(ctx, data)
     }
 
-    pub fn test_init_associated_account(
-        ctx: Context<TestInitAssociatedAccount>,
-        data: u64,
-    ) -> ProgramResult {
-        ctx.accounts.my_account.data = data;
-        Ok(())
-    }
-
-    pub fn test_associated_account(
-        ctx: Context<TestAssociatedAccount>,
-        data: u64,
-    ) -> ProgramResult {
-        ctx.accounts.my_account.data = data;
-        Ok(())
-    }
-
     pub fn test_u16(ctx: Context<TestU16>, data: u16) -> ProgramResult {
         ctx.accounts.my_account.data = data;
         Ok(())
@@ -81,8 +65,9 @@ pub mod misc {
         Ok(())
     }
 
-    pub fn test_simulate_associated_account(
+    pub fn test_simulate_bump_account(
         ctx: Context<TestSimulateAssociatedAccount>,
+        _bump: u8,
         data: u32,
     ) -> ProgramResult {
         let associated_account = *ctx.accounts.my_account.to_account_info().key;
@@ -254,37 +239,6 @@ pub struct TestClose<'info> {
     sol_dest: AccountInfo<'info>,
 }
 
-// `my_account` is the associated token account being created.
-// `authority` must be a `mut` and `signer` since it will pay for the creation
-// of the associated token account. `state` is used as an association, i.e., one
-// can *optionally* identify targets to be used as seeds for the program
-// derived address by using `with` (and it doesn't have to be a state account).
-// For example, the SPL token program uses a `Mint` account. Lastly,
-// `rent` and `system_program` are *required* by convention, since the
-// accounts are needed when creating the associated program address within
-// the program.
-#[derive(Accounts)]
-pub struct TestInitAssociatedAccount<'info> {
-    #[account(init, associated = authority, with = state, with = data, with = b"my-seed")]
-    my_account: ProgramAccount<'info, TestData>,
-    #[account(mut, signer)]
-    authority: AccountInfo<'info>,
-    state: ProgramState<'info, MyState>,
-    data: ProgramAccount<'info, Data>,
-    rent: Sysvar<'info, Rent>,
-    system_program: AccountInfo<'info>,
-}
-
-#[derive(Accounts)]
-pub struct TestAssociatedAccount<'info> {
-    #[account(mut, associated = authority, with = state, with = data, with = b"my-seed")]
-    my_account: ProgramAccount<'info, TestData>,
-    #[account(mut, signer)]
-    authority: AccountInfo<'info>,
-    state: ProgramState<'info, MyState>,
-    data: ProgramAccount<'info, Data>,
-}
-
 #[derive(Accounts)]
 pub struct TestU16<'info> {
     #[account(init)]
@@ -303,8 +257,15 @@ pub struct TestI16<'info> {
 pub struct TestSimulate {}
 
 #[derive(Accounts)]
+#[instruction(bump: u8)]
 pub struct TestSimulateAssociatedAccount<'info> {
-    #[account(init, associated = authority)]
+    #[account(
+				init,
+				seeds = [authority.key.as_ref()],
+				bump = bump,
+				payer = authority,
+				space = 100,
+		)]
     my_account: ProgramAccount<'info, TestData>,
     #[account(mut, signer)]
     authority: AccountInfo<'info>,
@@ -319,8 +280,7 @@ pub struct TestI8<'info> {
     rent: Sysvar<'info, Rent>,
 }
 
-#[associated]
-#[derive(Default)]
+#[account]
 pub struct TestData {
     data: u64,
 }
