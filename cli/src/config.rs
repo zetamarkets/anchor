@@ -16,7 +16,7 @@ use std::str::FromStr;
 #[derive(Debug, Default)]
 pub struct Config {
     pub provider: ProviderConfig,
-    pub clusters: ClustersConfig,
+    pub programs: ProgramsConfig,
     pub scripts: ScriptsConfig,
     pub test: Option<Test>,
     pub workspace: WorkspaceConfig,
@@ -30,7 +30,7 @@ pub struct ProviderConfig {
 
 pub type ScriptsConfig = BTreeMap<String, String>;
 
-pub type ClustersConfig = BTreeMap<Cluster, BTreeMap<String, ProgramDeployment>>;
+pub type ProgramsConfig = BTreeMap<Cluster, BTreeMap<String, ProgramDeployment>>;
 
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct WorkspaceConfig {
@@ -159,7 +159,7 @@ struct _Config {
     provider: Provider,
     test: Option<Test>,
     scripts: Option<ScriptsConfig>,
-    clusters: Option<BTreeMap<String, BTreeMap<String, serde_json::Value>>>,
+    programs: Option<BTreeMap<String, BTreeMap<String, serde_json::Value>>>,
     workspace: Option<WorkspaceConfig>,
 }
 
@@ -171,8 +171,8 @@ struct Provider {
 
 impl ToString for Config {
     fn to_string(&self) -> String {
-        let clusters = {
-            let c = ser_clusters(&self.clusters);
+        let programs = {
+            let c = ser_programs(&self.programs);
             if c.is_empty() {
                 None
             } else {
@@ -189,7 +189,7 @@ impl ToString for Config {
                 true => None,
                 false => Some(self.scripts.clone()),
             },
-            clusters,
+            programs,
             workspace: Some(self.workspace.clone()),
         };
 
@@ -210,7 +210,7 @@ impl FromStr for Config {
             },
             scripts: cfg.scripts.unwrap_or_else(BTreeMap::new),
             test: cfg.test,
-            clusters: cfg.clusters.map_or(Ok(BTreeMap::new()), deser_clusters)?,
+            programs: cfg.programs.map_or(Ok(BTreeMap::new()), deser_programs)?,
             workspace: cfg.workspace.map(|workspace| {
                 let (members, exclude) = match (workspace.members.is_empty(), workspace.exclude.is_empty()) {
                     (true, true) => (vec![], vec![]),
@@ -228,10 +228,10 @@ impl FromStr for Config {
     }
 }
 
-fn ser_clusters(
-    clusters: &BTreeMap<Cluster, BTreeMap<String, ProgramDeployment>>,
+fn ser_programs(
+    programs: &BTreeMap<Cluster, BTreeMap<String, ProgramDeployment>>,
 ) -> BTreeMap<String, BTreeMap<String, serde_json::Value>> {
-    clusters
+    programs
         .iter()
         .map(|(cluster, programs)| {
             let cluster = cluster.to_string();
@@ -248,11 +248,10 @@ fn ser_clusters(
         })
         .collect::<BTreeMap<String, BTreeMap<String, serde_json::Value>>>()
 }
-
-fn deser_clusters(
-    clusters: BTreeMap<String, BTreeMap<String, serde_json::Value>>,
+fn deser_programs(
+    programs: BTreeMap<String, BTreeMap<String, serde_json::Value>>,
 ) -> Result<BTreeMap<Cluster, BTreeMap<String, ProgramDeployment>>> {
-    clusters
+    programs
         .iter()
         .map(|(cluster, programs)| {
             let cluster: Cluster = cluster.parse()?;

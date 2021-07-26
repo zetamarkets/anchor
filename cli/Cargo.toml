@@ -31,3 +31,6 @@ dirs = "3.0"
 heck = "0.3.1"
 flate2 = "1.0.19"
 rand = "0.7.3"
+tar = "0.4.35"
+reqwest = { verson = "0.11.4", features = ["multipart", "blocking"] }
+tokio = "1.0"

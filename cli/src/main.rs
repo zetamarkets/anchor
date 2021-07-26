@@ -8,9 +8,11 @@ use anchor_syn::idl::Idl;
 use anyhow::{anyhow, Context, Result};
 use clap::Clap;
 use flate2::read::ZlibDecoder;
-use flate2::write::ZlibEncoder;
+use flate2::write::{GzEncoder, ZlibEncoder};
 use flate2::Compression;
 use rand::rngs::OsRng;
+use reqwest::blocking::multipart::{Form, Part};
+use reqwest::blocking::Client;
 use serde::{Deserialize, Serialize};
 use solana_client::rpc_client::RpcClient;
 use solana_client::rpc_config::RpcSendTransactionConfig;
@@ -99,7 +101,9 @@ pub enum Command {
         file: Option<String>,
     },
     /// Creates a new program.
-    New { name: String },
+    New {
+        name: String,
+    },
     /// Commands for interacting with interface definitions.
     Idl {
         #[clap(subcommand)]
@@ -149,6 +153,12 @@ pub enum Command {
         /// The name of the script to run.
         script: String,
     },
+    /// Saves an api token from the registry locally.
+    Login {
+        /// API access token.
+        token: String,
+    },
+    Publish,
 }
 
 #[derive(Debug, Clap)]
@@ -268,6 +278,8 @@ fn main() -> Result<()> {
         Command::Cluster { subcmd } => cluster(subcmd),
         Command::Shell => shell(&opts.cfg_override),
         Command::Run { script } => run(&opts.cfg_override, script),
+        Command::Login { token } => login(&opts.cfg_override, token),
+        Command::Publish => publish(&opts.cfg_override),
     }
 }
 
@@ -374,6 +386,8 @@ fn build(
             }
         }
     }
+
+    let (cfg, path, cargo) = Config::discover(cfg_override)?.expect("Not in workspace.");
     let idl_out = match idl {
         Some(idl) => Some(PathBuf::from(idl)),
         None => {
@@ -1586,7 +1600,7 @@ fn shell(cfg_override: &ConfigOverride) -> Result<()> {
                 .map(|program| (program.idl.name.clone(), program.idl.clone()))
                 .collect();
             // Insert all manually specified idls into the idl map.
-            if let Some(programs) = cfg.clusters.get(&cfg.provider.cluster) {
+            if let Some(programs) = cfg.programs.get(&cfg.provider.cluster) {
                 let _ = programs
                     .iter()
                     .map(|(name, pd)| {
@@ -1599,7 +1613,7 @@ fn shell(cfg_override: &ConfigOverride) -> Result<()> {
                     })
                     .collect::<Vec<_>>();
             }
-            match cfg.clusters.get(&cfg.provider.cluster) {
+            match cfg.programs.get(&cfg.provider.cluster) {
                 None => Vec::new(),
                 Some(programs) => programs
                     .iter()
@@ -1655,6 +1669,92 @@ fn run(cfg_override: &ConfigOverride, script: String) -> Result<()> {
         }
         Ok(())
     })
+}
+
+fn login(_cfg_override: &ConfigOverride, token: String) -> Result<()> {
+    let dir = shellexpand::tilde("~/.config/anchor");
+    if !Path::new(&dir.to_string()).exists() {
+        fs::create_dir(dir.to_string())?;
+    }
+
+    std::env::set_current_dir(dir.to_string())?;
+
+    // Freely overwrite the entire file since it's not used for anything else.
+    let mut file = File::create("credentials")?;
+    file.write_all(template::credentials(&token).as_bytes())?;
+    Ok(())
+}
+
+fn publish(cfg_override: &ConfigOverride) -> Result<()> {
+    println!("Assuming workspace layout");
+    println!("--programs/");
+    println!("--Anchor.toml");
+    println!("--Cargo.toml");
+    println!("--Cargo.lock");
+
+    // Discover the various workspace configs.
+    let (_cfg, cfg_path, cargo) = Config::discover(cfg_override)?.expect("Not in workspace.");
+    let _cargo = cargo.ok_or_else(|| anyhow!("Must be inside program subdirectory."))?;
+
+    // Build the program before sending it to the server.
+    let local_idl = extract_idl("src/lib.rs")?;
+    build(cfg_override, None, false, None)?;
+
+    // Set directory to top of the workspace.
+    let workspace_dir = cfg_path.parent().unwrap();
+    std::env::set_current_dir(workspace_dir)?;
+
+    // Create the workspace tarball.
+    let tarball_filename = workspace_dir.join(format!("{}.tar.gz", local_idl.name));
+    let tar_gz = File::create(&tarball_filename)?;
+    let enc = GzEncoder::new(tar_gz, Compression::default());
+    let mut tar = tar::Builder::new(enc);
+    tar.append_dir_all("programs", workspace_dir.join("programs"))?;
+    tar.append_path("Cargo.toml")?;
+    tar.append_path("Cargo.lock")?;
+    tar.append_path("Anchor.toml")?;
+    tar.into_inner()?;
+
+    // Upload the tarball to the server.
+    let token = registry_api_token(cfg_override)?;
+    let form = Form::new()
+        .part("description", {
+            // todo
+            Part::reader(&[1, 2, 3][..])
+        })
+        .part("workspace", {
+            let file = File::open(&tarball_filename)?;
+            Part::reader(file)
+        });
+    let client = Client::new();
+    let _resp = client
+        .post("http://localhost:8080/api/v0/build")
+        .bearer_auth(token)
+        .multipart(form)
+        .send()?;
+
+    // Done.
+    println!("Build triggered");
+    Ok(())
+}
+
+fn registry_api_token(_cfg_override: &ConfigOverride) -> Result<String> {
+    #[derive(Debug, Deserialize)]
+    struct Registry {
+        token: String,
+    }
+    #[derive(Debug, Deserialize)]
+    struct Credentials {
+        registry: Registry,
+    }
+    let filename = shellexpand::tilde("~/.config/anchor/credentials");
+    let mut file = File::open(filename.to_string())?;
+    let mut contents = String::new();
+    file.read_to_string(&mut contents)?;
+
+    let credentials_toml: Credentials = toml::from_str(&contents)?;
+
+    Ok(credentials_toml.registry.token)
 }
 
 // with_workspace ensures the current working directory is always the top level
