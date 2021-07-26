@@ -1,4 +1,11 @@
-use crate::*;
+use crate::{
+    ConstraintAddress, ConstraintAssociated, ConstraintAssociatedGroup, ConstraintAssociatedPayer,
+    ConstraintAssociatedSpace, ConstraintAssociatedWith, ConstraintBelongsTo, ConstraintClose,
+    ConstraintExecutable, ConstraintGroup, ConstraintInit, ConstraintLiteral, ConstraintMut,
+    ConstraintOwner, ConstraintRaw, ConstraintRentExempt, ConstraintSeeds, ConstraintSeedsGroup,
+    ConstraintSigner, ConstraintState, ConstraintToken, ConstraintTokenAuthority,
+    ConstraintTokenMint, Context, PdaKind, Ty,
+};
 use syn::ext::IdentExt;
 use syn::parse::{Error as ParseError, Parse, ParseStream, Result as ParseResult};
 use syn::punctuated::Punctuated;
@@ -74,16 +81,9 @@ pub fn parse_token(stream: ParseStream) -> ParseResult<ConstraintToken> {
                 .join(stream.span())
                 .unwrap_or_else(|| ident.span());
             match kw.as_str() {
-                // Deprecated since 0.11
-                "belongs_to" => {
-                    return Err(ParseError::new(
-                        ident.span(),
-                        "belongs_to is deprecated, please use has_one",
-                    ))
-                }
-                "has_one" => ConstraintToken::HasOne(Context::new(
+                "belongs_to" | "has_one" => ConstraintToken::BelongsTo(Context::new(
                     span,
-                    ConstraintHasOne {
+                    ConstraintBelongsTo {
                         join_target: stream.parse()?,
                     },
                 )),
@@ -176,12 +176,6 @@ pub fn parse_token(stream: ParseStream) -> ParseResult<ConstraintToken> {
                         auth: stream.parse()?,
                     },
                 )),
-                "bump" => ConstraintToken::Bump(Context::new(
-                    ident.span(),
-                    ConstraintTokenBump {
-                        bump: stream.parse()?,
-                    },
-                )),
                 _ => return Err(ParseError::new(ident.span(), "Invalid attribute")),
             }
         }
@@ -196,7 +190,7 @@ pub struct ConstraintGroupBuilder<'ty> {
     pub init: Option<Context<ConstraintInit>>,
     pub mutable: Option<Context<ConstraintMut>>,
     pub signer: Option<Context<ConstraintSigner>>,
-    pub has_one: Vec<Context<ConstraintHasOne>>,
+    pub belongs_to: Vec<Context<ConstraintBelongsTo>>,
     pub literal: Vec<Context<ConstraintLiteral>>,
     pub raw: Vec<Context<ConstraintRaw>>,
     pub owner: Option<Context<ConstraintOwner>>,
@@ -212,7 +206,6 @@ pub struct ConstraintGroupBuilder<'ty> {
     pub address: Option<Context<ConstraintAddress>>,
     pub token_mint: Option<Context<ConstraintTokenMint>>,
     pub token_authority: Option<Context<ConstraintTokenAuthority>>,
-    pub bump: Option<Context<ConstraintTokenBump>>,
 }
 
 impl<'ty> ConstraintGroupBuilder<'ty> {
@@ -222,7 +215,7 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
             init: None,
             mutable: None,
             signer: None,
-            has_one: Vec::new(),
+            belongs_to: Vec::new(),
             literal: Vec::new(),
             raw: Vec::new(),
             owner: None,
@@ -238,7 +231,6 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
             address: None,
             token_mint: None,
             token_authority: None,
-            bump: None,
         }
     }
     pub fn build(mut self) -> ParseResult<ConstraintGroup> {
@@ -283,7 +275,7 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
             init,
             mutable,
             signer,
-            has_one,
+            belongs_to,
             literal,
             raw,
             owner,
@@ -299,7 +291,6 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
             address,
             token_mint,
             token_authority,
-            bump,
         } = self;
 
         // Converts Option<Context<T>> -> Option<T>.
@@ -318,20 +309,12 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
             };
         }
 
-        let (owner, pda_owner) = {
-            if seeds.is_some() || associated.is_some() {
-                (None, owner.map(|o| o.owner_target.clone()))
-            } else {
-                (owner, None)
-            }
-        };
-
         let is_init = init.is_some();
         Ok(ConstraintGroup {
             init: into_inner!(init),
             mutable: into_inner!(mutable),
             signer: into_inner!(signer),
-            has_one: into_inner_vec!(has_one),
+            belongs_to: into_inner_vec!(belongs_to),
             literal: into_inner_vec!(literal),
             raw: into_inner_vec!(raw),
             owner: into_inner!(owner),
@@ -344,9 +327,7 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
                         payer: into_inner!(associated_payer.clone()).map(|a| a.target),
                         space: associated_space.clone().map(|s| s.space.clone()),
                         kind: match &token_mint {
-                            None => PdaKind::Program {
-                                owner: pda_owner.clone(),
-                            },
+                            None => PdaKind::Program,
                             Some(tm) => PdaKind::Token {
                                 mint: tm.clone().into_inner().mint,
                                 owner: match &token_authority {
@@ -358,7 +339,6 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
                                 },
                             },
                         },
-                        bump: into_inner!(bump).map(|b| b.bump),
                     })
                 })
                 .transpose()?,
@@ -371,7 +351,7 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
                 payer: associated_payer.map(|p| p.target.clone()),
                 space: associated_space.map(|s| s.space.clone()),
                 kind: match token_mint {
-                    None => PdaKind::Program { owner: pda_owner },
+                    None => PdaKind::Program,
                     Some(tm) => PdaKind::Token {
                         mint: tm.into_inner().mint,
                         owner: match token_authority {
@@ -391,7 +371,7 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
             ConstraintToken::Init(c) => self.add_init(c),
             ConstraintToken::Mut(c) => self.add_mut(c),
             ConstraintToken::Signer(c) => self.add_signer(c),
-            ConstraintToken::HasOne(c) => self.add_has_one(c),
+            ConstraintToken::BelongsTo(c) => self.add_belongs_to(c),
             ConstraintToken::Literal(c) => self.add_literal(c),
             ConstraintToken::Raw(c) => self.add_raw(c),
             ConstraintToken::Owner(c) => self.add_owner(c),
@@ -407,7 +387,6 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
             ConstraintToken::Address(c) => self.add_address(c),
             ConstraintToken::TokenAuthority(c) => self.add_token_authority(c),
             ConstraintToken::TokenMint(c) => self.add_token_mint(c),
-            ConstraintToken::Bump(c) => self.add_bump(c),
         }
     }
 
@@ -463,20 +442,6 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
         Ok(())
     }
 
-    fn add_bump(&mut self, c: Context<ConstraintTokenBump>) -> ParseResult<()> {
-        if self.bump.is_some() {
-            return Err(ParseError::new(c.span(), "bump already provided"));
-        }
-        if self.seeds.is_none() {
-            return Err(ParseError::new(
-                c.span(),
-                "seeds must be provided before bump",
-            ));
-        }
-        self.bump.replace(c);
-        Ok(())
-    }
-
     fn add_token_authority(&mut self, c: Context<ConstraintTokenAuthority>) -> ParseResult<()> {
         if self.token_authority.is_some() {
             return Err(ParseError::new(
@@ -510,17 +475,20 @@ impl<'ty> ConstraintGroupBuilder<'ty> {
         Ok(())
     }
 
-    fn add_has_one(&mut self, c: Context<ConstraintHasOne>) -> ParseResult<()> {
+    fn add_belongs_to(&mut self, c: Context<ConstraintBelongsTo>) -> ParseResult<()> {
         if self
-            .has_one
+            .belongs_to
             .iter()
             .filter(|item| item.join_target == c.join_target)
             .count()
             > 0
         {
-            return Err(ParseError::new(c.span(), "has_one target already provided"));
+            return Err(ParseError::new(
+                c.span(),
+                "belongs_to target already provided",
+            ));
         }
-        self.has_one.push(c);
+        self.belongs_to.push(c);
         Ok(())
     }
 

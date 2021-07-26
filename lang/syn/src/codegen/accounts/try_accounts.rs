@@ -1,4 +1,4 @@
-use crate::codegen::accounts::{constraints, generics, ParsedGenerics};
+use crate::codegen::accounts::{constraints, generics};
 use crate::{AccountField, AccountsStruct, Field, SysvarTy, Ty};
 use proc_macro2::TokenStream;
 use quote::quote;
@@ -7,12 +7,7 @@ use syn::Expr;
 // Generates the `Accounts` trait implementation.
 pub fn generate(accs: &AccountsStruct) -> proc_macro2::TokenStream {
     let name = &accs.ident;
-    let ParsedGenerics {
-        combined_generics,
-        trait_generics,
-        struct_generics,
-        where_clause,
-    } = generics(accs);
+    let (combined_generics, trait_generics, strct_generics) = generics(accs);
 
     // Deserialization for each field
     let deser_fields: Vec<proc_macro2::TokenStream> = accs
@@ -93,8 +88,7 @@ pub fn generate(accs: &AccountsStruct) -> proc_macro2::TokenStream {
     };
 
     quote! {
-        #[automatically_derived]
-        impl<#combined_generics> anchor_lang::Accounts<#trait_generics> for #name<#struct_generics> #where_clause {
+        impl#combined_generics anchor_lang::Accounts#trait_generics for #name#strct_generics {
             #[inline(never)]
             fn try_accounts(
                 program_id: &anchor_lang::solana_program::pubkey::Pubkey,
@@ -139,31 +133,31 @@ fn typed_ident(field: &Field) -> TokenStream {
     let ty = match &field.ty {
         Ty::AccountInfo => quote! { AccountInfo },
         Ty::ProgramState(ty) => {
-            let account = &ty.account_type_path;
+            let account = &ty.account_ident;
             quote! {
                 ProgramState<#account>
             }
         }
         Ty::CpiState(ty) => {
-            let account = &ty.account_type_path;
+            let account = &ty.account_ident;
             quote! {
                 CpiState<#account>
             }
         }
         Ty::ProgramAccount(ty) => {
-            let account = &ty.account_type_path;
+            let account = &ty.account_ident;
             quote! {
                 ProgramAccount<#account>
             }
         }
         Ty::Loader(ty) => {
-            let account = &ty.account_type_path;
+            let account = &ty.account_ident;
             quote! {
                 Loader<#account>
             }
         }
         Ty::CpiAccount(ty) => {
-            let account = &ty.account_type_path;
+            let account = &ty.account_ident;
             quote! {
                 CpiAccount<#account>
             }

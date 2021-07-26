@@ -3,7 +3,7 @@ import Provider from "../../provider";
 import { IdlInstruction } from "../../idl";
 import { splitArgsAndCtx } from "../context";
 import { TransactionFn } from "./transaction";
-import { EventParser, Event } from "../event";
+import { EventParser } from "../event";
 import Coder from "../../coder";
 import { Idl } from "../../idl";
 import { ProgramError } from "../../error";

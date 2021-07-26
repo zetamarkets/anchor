@@ -44,6 +44,8 @@ export class EventParser {
       }
       if (didPop) {
         execution.pop();
+        // Skip the "success" log, which always follows the consumed log.
+        logScanner.next();
       }
       log = logScanner.next();
     }
@@ -58,10 +60,7 @@ export class EventParser {
     log: string
   ): [Event | null, string | null, boolean] {
     // Executing program is this program.
-    if (
-      execution.stack.length > 0 &&
-      execution.program() === this.programId.toString()
-    ) {
+    if (execution.program() === this.programId.toString()) {
       return this.handleProgramLog(log);
     }
     // Executing program is not this program.
@@ -90,20 +89,18 @@ export class EventParser {
   private handleSystemLog(log: string): [string | null, boolean] {
     // System component.
     const logStart = log.split(":")[0];
-
-    // Did the program finish executing?
-    if (logStart.match(/^Program (.*) success/g) !== null) {
-      return [null, true];
-      // Recursive call.
-    } else if (
-      logStart.startsWith(`Program ${this.programId.toString()} invoke`)
-    ) {
+    // Recursive call.
+    if (logStart.startsWith(`Program ${this.programId.toString()} invoke`)) {
       return [this.programId.toString(), false];
     }
-    // CPI call.
+    // Cpi call.
     else if (logStart.includes("invoke")) {
       return ["cpi", false]; // Any string will do.
     } else {
+      // Did the program finish executing?
+      if (logStart.match(/^Program (.*) consumed .*$/g) !== null) {
+        return [null, true];
+      }
       return [null, false];
     }
   }

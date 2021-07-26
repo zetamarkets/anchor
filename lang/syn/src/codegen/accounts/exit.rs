@@ -1,16 +1,11 @@
-use crate::codegen::accounts::{generics, ParsedGenerics};
+use crate::codegen::accounts::generics;
 use crate::{AccountField, AccountsStruct};
 use quote::quote;
 
 // Generates the `Exit` trait implementation.
 pub fn generate(accs: &AccountsStruct) -> proc_macro2::TokenStream {
     let name = &accs.ident;
-    let ParsedGenerics {
-        combined_generics,
-        trait_generics,
-        struct_generics,
-        where_clause,
-    } = generics(accs);
+    let (combined_generics, trait_generics, strct_generics) = generics(accs);
 
     let on_save: Vec<proc_macro2::TokenStream> = accs
         .fields
@@ -44,8 +39,7 @@ pub fn generate(accs: &AccountsStruct) -> proc_macro2::TokenStream {
         })
         .collect();
     quote! {
-        #[automatically_derived]
-        impl<#combined_generics> anchor_lang::AccountsExit<#trait_generics> for #name<#struct_generics> #where_clause{
+        impl#combined_generics anchor_lang::AccountsExit#trait_generics for #name#strct_generics {
             fn exit(&self, program_id: &anchor_lang::solana_program::pubkey::Pubkey) -> anchor_lang::solana_program::entrypoint::ProgramResult {
                 #(#on_save)*
                 Ok(())

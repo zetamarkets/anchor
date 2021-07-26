@@ -61,23 +61,23 @@ describe("errors", () => {
     }
   });
 
-  it("Emits a has one error", async () => {
+  it("Emits a belongs to error", async () => {
     try {
       const account = new Account();
-      const tx = await program.rpc.hasOneError({
+      const tx = await program.rpc.belongsToError({
         accounts: {
           myAccount: account.publicKey,
           owner: anchor.web3.SYSVAR_RENT_PUBKEY,
           rent: anchor.web3.SYSVAR_RENT_PUBKEY,
         },
         instructions: [
-          await program.account.hasOneAccount.createInstruction(account),
+          await program.account.belongsToAccount.createInstruction(account),
         ],
         signers: [account],
       });
       assert.ok(false);
     } catch (err) {
-      const errMsg = "A has_one constraint was violated";
+      const errMsg = "A belongs_to constraint was violated";
       assert.equal(err.toString(), errMsg);
       assert.equal(err.msg, errMsg);
       assert.equal(err.code, 141);

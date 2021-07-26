@@ -118,40 +118,30 @@ fn ident_string(f: &syn::Field) -> ParseResult<String> {
 
 fn parse_program_state(path: &syn::Path) -> ParseResult<ProgramStateTy> {
     let account_ident = parse_account(path)?;
-    Ok(ProgramStateTy {
-        account_type_path: account_ident,
-    })
+    Ok(ProgramStateTy { account_ident })
 }
 
 fn parse_cpi_state(path: &syn::Path) -> ParseResult<CpiStateTy> {
     let account_ident = parse_account(path)?;
-    Ok(CpiStateTy {
-        account_type_path: account_ident,
-    })
+    Ok(CpiStateTy { account_ident })
 }
 
 fn parse_cpi_account(path: &syn::Path) -> ParseResult<CpiAccountTy> {
     let account_ident = parse_account(path)?;
-    Ok(CpiAccountTy {
-        account_type_path: account_ident,
-    })
+    Ok(CpiAccountTy { account_ident })
 }
 
 fn parse_program_account(path: &syn::Path) -> ParseResult<ProgramAccountTy> {
     let account_ident = parse_account(path)?;
-    Ok(ProgramAccountTy {
-        account_type_path: account_ident,
-    })
+    Ok(ProgramAccountTy { account_ident })
 }
 
 fn parse_program_account_zero_copy(path: &syn::Path) -> ParseResult<LoaderTy> {
     let account_ident = parse_account(path)?;
-    Ok(LoaderTy {
-        account_type_path: account_ident,
-    })
+    Ok(LoaderTy { account_ident })
 }
 
-fn parse_account(path: &syn::Path) -> ParseResult<syn::TypePath> {
+fn parse_account(path: &syn::Path) -> ParseResult<syn::Ident> {
     let segments = &path.segments[0];
     match &segments.arguments {
         syn::PathArguments::AngleBracketed(args) => {
@@ -163,7 +153,18 @@ fn parse_account(path: &syn::Path) -> ParseResult<syn::TypePath> {
                 ));
             }
             match &args.args[1] {
-                syn::GenericArgument::Type(syn::Type::Path(ty_path)) => Ok(ty_path.clone()),
+                syn::GenericArgument::Type(syn::Type::Path(ty_path)) => {
+                    // TODO: allow segmented paths.
+                    if ty_path.path.segments.len() != 1 {
+                        return Err(ParseError::new(
+                            ty_path.path.span(),
+                            "segmented paths are not currently allowed",
+                        ));
+                    }
+
+                    let path_segment = &ty_path.path.segments[0];
+                    Ok(path_segment.ident.clone())
+                }
                 _ => Err(ParseError::new(
                     args.args[1].span(),
                     "first bracket argument must be a lifetime",

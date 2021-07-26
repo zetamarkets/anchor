@@ -6,7 +6,7 @@ cache: cargo
 env:
   global:
     - NODE_VERSION="14.7.0"
-    - SOLANA_CLI_VERSION="1.7.4"
+    - SOLANA_CLI_VERSION="1.7.1"
 git:
   submodules: true
 
@@ -22,7 +22,6 @@ _examples: &examples
   - npm install -g mocha
   - npm install -g ts-mocha
   - npm install -g typescript
-  - npm install -g ts-node
   - npm install -g buffer
   - cd ts && yarn && yarn build && npm link && cd ../
   - npm install -g @project-serum/serum
@@ -44,9 +43,6 @@ jobs:
         - cargo fmt -- --check
         - cargo clippy --all-targets -- -D warnings
         - cargo test
-        - pushd ts && yarn && popd
-        - pushd ts && yarn test && popd
-        - pushd ts && yarn lint && popd
     - <<: *examples
       name: Runs the examples 1
       script:

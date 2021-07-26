@@ -3,7 +3,6 @@ import * as toml from "toml";
 import { PublicKey } from "@solana/web3.js";
 import { Program } from "./program";
 import { Idl } from "./idl";
-import { isBrowser } from "./utils/common";
 
 let _populatedWorkspace = false;
 
@@ -16,13 +15,16 @@ let _populatedWorkspace = false;
  */
 const workspace = new Proxy({} as any, {
   get(workspaceCache: { [key: string]: Program }, programName: string) {
-    if (isBrowser) {
-      console.log("Workspaces aren't available in the browser");
-      return undefined;
-    }
-
     const fs = require("fs");
     const process = require("process");
+
+    if (
+      typeof window !== "undefined" &&
+      !window.process?.hasOwnProperty("type")
+    ) {
+      // Workspaces are available in electron, but not in the browser, yet.
+      return undefined;
+    }
 
     if (!_populatedWorkspace) {
       const path = require("path");
@@ -42,18 +44,16 @@ const workspace = new Proxy({} as any, {
 
       const idlFolder = `${projectRoot}/target/idl`;
       if (!fs.existsSync(idlFolder)) {
-        throw new Error(
-          `${idlFolder} doesn't exist. Did you use "anchor build"?`
-        );
+        throw new Error(`${idlFolder} doesn't exist. Did you use "anchor build"?`);
       }
 
       const idlMap = new Map<string, Idl>();
-      fs.readdirSync(idlFolder).forEach((file) => {
+      fs.readdirSync(idlFolder).forEach(file => {
         const filePath = `${idlFolder}/${file}`;
         const idlStr = fs.readFileSync(filePath);
         const idl = JSON.parse(idlStr);
         idlMap.set(idl.name, idl);
-        const name = camelCase(idl.name, { pascalCase: true });
+        const name = camelCase(idl.name, {pascalCase: true});
         if (idl.metadata && idl.metadata.address) {
           workspaceCache[name] = new Program(
             idl,

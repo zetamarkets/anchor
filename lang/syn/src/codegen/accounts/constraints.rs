@@ -1,6 +1,6 @@
 use crate::{
-    CompositeField, Constraint, ConstraintAddress, ConstraintAssociatedGroup, ConstraintClose,
-    ConstraintExecutable, ConstraintGroup, ConstraintHasOne, ConstraintInit, ConstraintLiteral,
+    CompositeField, Constraint, ConstraintAddress, ConstraintAssociatedGroup, ConstraintBelongsTo,
+    ConstraintClose, ConstraintExecutable, ConstraintGroup, ConstraintInit, ConstraintLiteral,
     ConstraintMut, ConstraintOwner, ConstraintRaw, ConstraintRentExempt, ConstraintSeedsGroup,
     ConstraintSigner, ConstraintState, Field, PdaKind, Ty,
 };
@@ -43,7 +43,7 @@ pub fn linearize(c_group: &ConstraintGroup) -> Vec<Constraint> {
         init,
         mutable,
         signer,
-        has_one,
+        belongs_to,
         literal,
         raw,
         owner,
@@ -73,7 +73,7 @@ pub fn linearize(c_group: &ConstraintGroup) -> Vec<Constraint> {
     if let Some(c) = signer {
         constraints.push(Constraint::Signer(c));
     }
-    constraints.append(&mut has_one.into_iter().map(Constraint::HasOne).collect());
+    constraints.append(&mut belongs_to.into_iter().map(Constraint::BelongsTo).collect());
     constraints.append(&mut literal.into_iter().map(Constraint::Literal).collect());
     constraints.append(&mut raw.into_iter().map(Constraint::Raw).collect());
     if let Some(c) = owner {
@@ -101,7 +101,7 @@ fn generate_constraint(f: &Field, c: &Constraint) -> proc_macro2::TokenStream {
     match c {
         Constraint::Init(c) => generate_constraint_init(f, c),
         Constraint::Mut(c) => generate_constraint_mut(f, c),
-        Constraint::HasOne(c) => generate_constraint_has_one(f, c),
+        Constraint::BelongsTo(c) => generate_constraint_belongs_to(f, c),
         Constraint::Signer(c) => generate_constraint_signer(f, c),
         Constraint::Literal(c) => generate_constraint_literal(c),
         Constraint::Raw(c) => generate_constraint_raw(c),
@@ -157,7 +157,10 @@ pub fn generate_constraint_mut(f: &Field, _c: &ConstraintMut) -> proc_macro2::To
     }
 }
 
-pub fn generate_constraint_has_one(f: &Field, c: &ConstraintHasOne) -> proc_macro2::TokenStream {
+pub fn generate_constraint_belongs_to(
+    f: &Field,
+    c: &ConstraintBelongsTo,
+) -> proc_macro2::TokenStream {
     let target = c.join_target.clone();
     let ident = &f.ident;
     let field = match &f.ty {
@@ -166,7 +169,7 @@ pub fn generate_constraint_has_one(f: &Field, c: &ConstraintHasOne) -> proc_macr
     };
     quote! {
         if &#field.#target != #target.to_account_info().key {
-            return Err(anchor_lang::__private::ErrorCode::ConstraintHasOne.into());
+            return Err(anchor_lang::__private::ErrorCode::ConstraintBelongsTo.into());
         }
     }
 }
@@ -265,13 +268,8 @@ fn generate_constraint_seeds_init(f: &Field, c: &ConstraintSeedsGroup) -> proc_m
     let seeds_constraint = generate_constraint_seeds_address(f, c);
     let seeds_with_nonce = {
         let s = &c.seeds;
-        match c.bump.as_ref() {
-            None => quote! {
-                [#s]
-            },
-            Some(b) => quote! {
-                [#s, &[#b]]
-            },
+        quote! {
+            [#s]
         }
     };
     generate_pda(
@@ -290,47 +288,14 @@ fn generate_constraint_seeds_address(
     c: &ConstraintSeedsGroup,
 ) -> proc_macro2::TokenStream {
     let name = &f.ident;
-
-    // If the bump is provided on *initialization*, then force it to be the
-    // canonical nonce.
-    if c.is_init && c.bump.is_some() {
-        let s = &c.seeds;
-        let b = c.bump.as_ref().unwrap();
-        quote! {
-            let (__program_signer, __bump) = anchor_lang::solana_program::pubkey::Pubkey::find_program_address(
-                &[#s],
-                program_id,
-            );
-            if #name.to_account_info().key != &__program_signer {
-                return Err(anchor_lang::__private::ErrorCode::ConstraintSeeds.into());
-            }
-            if __bump != #b {
-                return Err(anchor_lang::__private::ErrorCode::ConstraintSeeds.into());
-            }
-        }
-    } else {
-        let seeds = match c.bump.as_ref() {
-            None => {
-                let s = &c.seeds;
-                quote! {
-                    [#s]
-                }
-            }
-            Some(b) => {
-                let s = &c.seeds;
-                quote! {
-                    [#s, &[#b]]
-                }
-            }
-        };
-        quote! {
-            let __program_signer = Pubkey::create_program_address(
-                &#seeds,
-                program_id,
-            ).map_err(|_| anchor_lang::__private::ErrorCode::ConstraintSeeds)?;
-            if #name.to_account_info().key != &__program_signer {
-                return Err(anchor_lang::__private::ErrorCode::ConstraintSeeds.into());
-            }
+    let seeds = &c.seeds;
+    quote! {
+        let __program_signer = Pubkey::create_program_address(
+            &[#seeds],
+            program_id,
+        ).map_err(|_| anchor_lang::__private::ErrorCode::ConstraintSeeds)?;
+        if #name.to_account_info().key != &__program_signer {
+            return Err(anchor_lang::__private::ErrorCode::ConstraintSeeds.into());
         }
     }
 }
@@ -393,49 +358,27 @@ pub fn generate_constraint_associated_init(
     )
 }
 
-fn parse_ty(f: &Field) -> (proc_macro2::TokenStream, proc_macro2::TokenStream, bool) {
+fn parse_ty(f: &Field) -> (&syn::Ident, proc_macro2::TokenStream, bool) {
     match &f.ty {
-        Ty::ProgramAccount(ty) => {
-            let ident = &ty.account_type_path;
-            (
-                quote! {
-                    #ident
-                },
-                quote! {
-                    anchor_lang::ProgramAccount
-                },
-                false,
-            )
-        }
-        Ty::Loader(ty) => {
-            let ident = &ty.account_type_path;
-            (
-                quote! {
-                    #ident
-                },
-                quote! {
-                    anchor_lang::Loader
-                },
-                true,
-            )
-        }
-        Ty::CpiAccount(ty) => {
-            let ident = &ty.account_type_path;
-            (
-                quote! {
-                    #ident
-                },
-                quote! {
-                    anchor_lang::CpiAccount
-                },
-                false,
-            )
-        }
-        Ty::AccountInfo => (
+        Ty::ProgramAccount(ty) => (
+            &ty.account_ident,
             quote! {
-                AccountInfo
+                anchor_lang::ProgramAccount
             },
-            quote! {},
+            false,
+        ),
+        Ty::Loader(ty) => (
+            &ty.account_ident,
+            quote! {
+                anchor_lang::Loader
+            },
+            true,
+        ),
+        Ty::CpiAccount(ty) => (
+            &ty.account_ident,
+            quote! {
+                anchor_lang::CpiAccount
+            },
             false,
         ),
         _ => panic!("Invalid type for initializing a program derived address"),
@@ -491,30 +434,9 @@ pub fn generate_pda(
         },
     };
 
-    let (combined_account_ty, try_from) = match f.ty {
-        Ty::AccountInfo => (
-            quote! {
-                AccountInfo
-            },
-            quote! {
-                #field.to_account_info()
-            },
-        ),
-        _ => (
-            quote! {
-                #account_wrapper_ty<#account_ty>
-            },
-            quote! {
-                #account_wrapper_ty::try_from_init(
-                    &#field.to_account_info(),
-                )?
-            },
-        ),
-    };
-
     match kind {
         PdaKind::Token { owner, mint } => quote! {
-            let #field: #combined_account_ty = {
+            let #field: #account_wrapper_ty<#account_ty> = {
                 #space
                 #payer
                 #seeds_constraint
@@ -581,19 +503,9 @@ pub fn generate_pda(
                 )?
             };
         },
-        PdaKind::Program { owner } => {
-            // Owner of the account being created. If not specified,
-            // default to the currently executing program.
-            let owner = match owner {
-                None => quote! {
-                    program_id
-                },
-                Some(o) => quote! {
-                    &#o
-                },
-            };
+        PdaKind::Program => {
             quote! {
-                let #field = {
+                let #field: #account_wrapper_ty<#account_ty> = {
                     #space
                     #payer
                     #seeds_constraint
@@ -604,8 +516,9 @@ pub fn generate_pda(
                         #field.to_account_info().key,
                         lamports,
                         space as u64,
-                        #owner,
+                        program_id,
                     );
+
 
                     anchor_lang::solana_program::program::invoke_signed(
                         &ix,
@@ -623,7 +536,9 @@ pub fn generate_pda(
 
                     // For now, we assume all accounts created with the `associated`
                     // attribute have a `nonce` field in their account.
-                    let mut pa: #combined_account_ty = #try_from;
+                    let mut pa: #account_wrapper_ty<#account_ty> = #account_wrapper_ty::try_from_init(
+                        &#field.to_account_info(),
+                    )?;
 
                     #nonce_assignment
                     pa
@@ -705,7 +620,7 @@ pub fn generate_constraint_state(f: &Field, c: &ConstraintState) -> proc_macro2:
     let program_target = c.program_target.clone();
     let ident = &f.ident;
     let account_ty = match &f.ty {
-        Ty::CpiState(ty) => &ty.account_type_path,
+        Ty::CpiState(ty) => &ty.account_ident,
         _ => panic!("Invalid state constraint"),
     };
     quote! {

@@ -12,7 +12,7 @@ use syn::spanned::Spanned;
 use syn::token::Comma;
 use syn::{
     Expr, Generics, Ident, ImplItemMethod, ItemEnum, ItemFn, ItemImpl, ItemMod, ItemStruct, LitInt,
-    LitStr, PatType, Token, TypePath,
+    LitStr, PatType, Token,
 };
 
 pub mod codegen;
@@ -30,7 +30,6 @@ pub struct Program {
     pub ixs: Vec<Ix>,
     pub name: Ident,
     pub program_mod: ItemMod,
-    pub fallback_fn: Option<FallbackFn>,
 }
 
 impl Parse for Program {
@@ -91,11 +90,6 @@ pub struct Ix {
 pub struct IxArg {
     pub name: Ident,
     pub raw_arg: PatType,
-}
-
-#[derive(Debug)]
-pub struct FallbackFn {
-    raw_method: ItemFn,
 }
 
 #[derive(Debug)]
@@ -198,30 +192,30 @@ pub enum SysvarTy {
 
 #[derive(Debug, PartialEq)]
 pub struct ProgramStateTy {
-    pub account_type_path: TypePath,
+    pub account_ident: Ident,
 }
 
 #[derive(Debug, PartialEq)]
 pub struct CpiStateTy {
-    pub account_type_path: TypePath,
+    pub account_ident: Ident,
 }
 
 #[derive(Debug, PartialEq)]
 pub struct ProgramAccountTy {
     // The struct type of the account.
-    pub account_type_path: TypePath,
+    pub account_ident: Ident,
 }
 
 #[derive(Debug, PartialEq)]
 pub struct CpiAccountTy {
     // The struct type of the account.
-    pub account_type_path: TypePath,
+    pub account_ident: Ident,
 }
 
 #[derive(Debug, PartialEq)]
 pub struct LoaderTy {
     // The struct type of the account.
-    pub account_type_path: TypePath,
+    pub account_ident: Ident,
 }
 
 #[derive(Debug)]
@@ -271,7 +265,7 @@ pub struct ConstraintGroup {
     executable: Option<ConstraintExecutable>,
     state: Option<ConstraintState>,
     associated: Option<ConstraintAssociatedGroup>,
-    has_one: Vec<ConstraintHasOne>,
+    belongs_to: Vec<ConstraintBelongsTo>,
     literal: Vec<ConstraintLiteral>,
     raw: Vec<ConstraintRaw>,
     close: Option<ConstraintClose>,
@@ -305,7 +299,7 @@ pub enum Constraint {
     Init(ConstraintInit),
     Mut(ConstraintMut),
     Signer(ConstraintSigner),
-    HasOne(ConstraintHasOne),
+    BelongsTo(ConstraintBelongsTo),
     Literal(ConstraintLiteral),
     Raw(ConstraintRaw),
     Owner(ConstraintOwner),
@@ -325,7 +319,7 @@ pub enum ConstraintToken {
     Init(Context<ConstraintInit>),
     Mut(Context<ConstraintMut>),
     Signer(Context<ConstraintSigner>),
-    HasOne(Context<ConstraintHasOne>),
+    BelongsTo(Context<ConstraintBelongsTo>),
     Literal(Context<ConstraintLiteral>),
     Raw(Context<ConstraintRaw>),
     Owner(Context<ConstraintOwner>),
@@ -341,7 +335,6 @@ pub enum ConstraintToken {
     Address(Context<ConstraintAddress>),
     TokenMint(Context<ConstraintTokenMint>),
     TokenAuthority(Context<ConstraintTokenAuthority>),
-    Bump(Context<ConstraintTokenBump>),
 }
 
 impl Parse for ConstraintToken {
@@ -360,7 +353,7 @@ pub struct ConstraintMut {}
 pub struct ConstraintSigner {}
 
 #[derive(Debug, Clone)]
-pub struct ConstraintHasOne {
+pub struct ConstraintBelongsTo {
     pub join_target: Expr,
 }
 
@@ -397,7 +390,6 @@ pub struct ConstraintSeedsGroup {
     pub payer: Option<Ident>,
     pub space: Option<Expr>,
     pub kind: PdaKind,
-    pub bump: Option<Expr>,
 }
 
 #[derive(Debug, Clone)]
@@ -446,7 +438,7 @@ pub struct ConstraintAssociatedSpace {
 #[derive(Debug, Clone)]
 #[allow(clippy::large_enum_variant)]
 pub enum PdaKind {
-    Program { owner: Option<Expr> },
+    Program,
     Token { owner: Expr, mint: Expr },
 }
 
@@ -463,11 +455,6 @@ pub struct ConstraintTokenMint {
 #[derive(Debug, Clone)]
 pub struct ConstraintTokenAuthority {
     auth: Expr,
-}
-
-#[derive(Debug, Clone)]
-pub struct ConstraintTokenBump {
-    bump: Expr,
 }
 
 // Syntaxt context object for preserving metadata about the inner item.

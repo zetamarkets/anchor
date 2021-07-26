@@ -10,7 +10,6 @@ import Coder, {
   EventCoder,
   StateCoder,
   TypesCoder,
-  AccountsCoder,
 } from "./coder";
 import { Instruction } from "./coder/instruction";
 import { Idl } from "./idl";
@@ -57,7 +56,6 @@ export {
   EventCoder,
   StateCoder,
   TypesCoder,
-  AccountsCoder,
   Event,
   Instruction,
   setProvider,

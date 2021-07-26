@@ -1,42 +1,5 @@
 import assert from "assert";
-import {
-  AccountInfo,
-  AccountMeta,
-  Connection,
-  PublicKey,
-  TransactionSignature,
-  Transaction,
-  TransactionInstruction,
-} from "@solana/web3.js";
-import { Address, translateAddress } from "../program/common";
-import Provider, { getProvider } from "../provider";
-
-/**
- * Sends a transaction to a program with the given accounts and instruction
- * data.
- */
-export async function invoke(
-  programId: Address,
-  accounts?: Array<AccountMeta>,
-  data?: Buffer,
-  provider?: Provider
-): Promise<TransactionSignature> {
-  programId = translateAddress(programId);
-  if (!provider) {
-    provider = getProvider();
-  }
-
-  const tx = new Transaction();
-  tx.add(
-    new TransactionInstruction({
-      programId,
-      keys: accounts ?? [],
-      data,
-    })
-  );
-
-  return await provider.send(tx);
-}
+import { PublicKey, AccountInfo, Connection } from "@solana/web3.js";
 
 export async function getMultipleAccounts(
   connection: Connection,

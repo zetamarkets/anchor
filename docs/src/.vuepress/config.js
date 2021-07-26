@@ -5,7 +5,7 @@ module.exports = {
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
-  title: "⚓ Anchor",
+  title: "Anchor",
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#description
    */
@@ -24,8 +24,6 @@ module.exports = {
       { name: "apple-mobile-web-app-status-bar-style", content: "black" },
     ],
   ],
-
-  theme: "default-prefers-color-scheme",
 
   /**
    * Theme configuration, here is the default theme configuration for VuePress.
@@ -50,14 +48,7 @@ module.exports = {
       },
       {
         collapsable: false,
-        title: "Teams",
-        children: [
-          "/getting-started/projects",
-        ],
-      },
-      {
-        collapsable: false,
-        title: "Tutorials",
+        title: "Programs",
         children: [
           "/tutorials/tutorial-0",
           "/tutorials/tutorial-1",
@@ -65,6 +56,7 @@ module.exports = {
           "/tutorials/tutorial-3",
           "/tutorials/tutorial-4",
           "/tutorials/tutorial-5",
+          "/tutorials/tutorial-6",
         ],
       },
       {

@@ -1,24 +1,20 @@
 use crate::parser::program::ctx_accounts_ident;
-use crate::{FallbackFn, Ix, IxArg};
+use crate::{Ix, IxArg};
 use syn::parse::{Error as ParseError, Result as ParseResult};
 use syn::spanned::Spanned;
 
 // Parse all non-state ix handlers from the program mod definition.
-pub fn parse(program_mod: &syn::ItemMod) -> ParseResult<(Vec<Ix>, Option<FallbackFn>)> {
+pub fn parse(program_mod: &syn::ItemMod) -> ParseResult<Vec<Ix>> {
     let mod_content = &program_mod
         .content
         .as_ref()
         .ok_or_else(|| ParseError::new(program_mod.span(), "program content not provided"))?
         .1;
 
-    let ixs = mod_content
+    mod_content
         .iter()
         .filter_map(|item| match item {
-            syn::Item::Fn(item_fn) => {
-                let (ctx, _) = parse_args(item_fn).ok()?;
-                ctx_accounts_ident(&ctx.raw_arg).ok()?;
-                Some(item_fn)
-            }
+            syn::Item::Fn(item_fn) => Some(item_fn),
             _ => None,
         })
         .map(|method: &syn::ItemFn| {
@@ -31,36 +27,7 @@ pub fn parse(program_mod: &syn::ItemMod) -> ParseResult<(Vec<Ix>, Option<Fallbac
                 anchor_ident,
             })
         })
-        .collect::<ParseResult<Vec<Ix>>>()?;
-
-    let fallback_fn = {
-        let fallback_fns = mod_content
-            .iter()
-            .filter_map(|item| match item {
-                syn::Item::Fn(item_fn) => {
-                    let (ctx, _args) = parse_args(item_fn).ok()?;
-                    if ctx_accounts_ident(&ctx.raw_arg).is_ok() {
-                        return None;
-                    }
-                    Some(item_fn)
-                }
-                _ => None,
-            })
-            .collect::<Vec<_>>();
-        if fallback_fns.len() > 1 {
-            return Err(ParseError::new(
-                fallback_fns[0].span(),
-                "More than one fallback function found",
-            ));
-        }
-        fallback_fns
-            .first()
-            .map(|method: &&syn::ItemFn| FallbackFn {
-                raw_method: (*method).clone(),
-            })
-    };
-
-    Ok((ixs, fallback_fn))
+        .collect::<ParseResult<Vec<Ix>>>()
 }
 
 pub fn parse_args(method: &syn::ItemFn) -> ParseResult<(IxArg, Vec<IxArg>)> {
