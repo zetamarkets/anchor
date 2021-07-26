@@ -106,11 +106,7 @@ export default class Provider {
 
     const rawTx = tx.serialize();
 
-    const txId = await sendAndConfirmRawTransaction(
-      this.connection,
-      rawTx,
-      opts
-    );
+    const txId = await this.connection.sendRawTransaction(rawTx, opts);
 
     return txId;
   }
