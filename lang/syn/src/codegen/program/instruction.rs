@@ -20,11 +20,15 @@ pub fn generate(program: &Program) -> proc_macro2::TokenStream {
                 if ctor_args.is_empty() {
                     quote! {
                         #[derive(AnchorSerialize, AnchorDeserialize)]
+                        #[cfg(feature = "serialize")]
+                        #[derive(Serialize, Debug)]
                         pub struct New;
                     }
                 } else {
                     quote! {
                         #[derive(AnchorSerialize, AnchorDeserialize)]
+                        #[cfg(feature = "serialize")]
+                        #[derive(Serialize, Debug)]
                         pub struct New {
                             #(#ctor_args),*
                         }
@@ -97,6 +101,8 @@ pub fn generate(program: &Program) -> proc_macro2::TokenStream {
                             quote! {
                                 /// Anchor generated instruction.
                                 #[derive(AnchorSerialize, AnchorDeserialize)]
+                                #[cfg(feature = "serialize")]
+                                #[derive(Serialize, Debug)]
                                 pub struct #ix_name_camel;
 
                                 #ix_data_trait
@@ -105,6 +111,8 @@ pub fn generate(program: &Program) -> proc_macro2::TokenStream {
                             quote! {
                                 /// Anchor generated instruction.
                                 #[derive(AnchorSerialize, AnchorDeserialize)]
+                                #[cfg(feature = "serialize")]
+                                #[derive(Serialize, Debug)]
                                 pub struct #ix_name_camel {
                                     #(#raw_args),*
                                 }
@@ -151,7 +159,7 @@ pub fn generate(program: &Program) -> proc_macro2::TokenStream {
             if ix.args.is_empty() {
                 quote! {
                     /// Instruction.
-                    #[derive(AnchorSerialize, AnchorDeserialize)]
+                    #[derive(AnchorSerialize, AnchorDeserialize, Serialize, Debug)]
                     pub struct #ix_name_camel;
 
                     #ix_data_trait
@@ -159,7 +167,7 @@ pub fn generate(program: &Program) -> proc_macro2::TokenStream {
             } else {
                 quote! {
                     /// Instruction.
-                    #[derive(AnchorSerialize, AnchorDeserialize)]
+                    #[derive(AnchorSerialize, AnchorDeserialize, Serialize, Debug)]
                     pub struct #ix_name_camel {
                         #(#raw_args),*
                     }
@@ -179,6 +187,7 @@ pub fn generate(program: &Program) -> proc_macro2::TokenStream {
         /// instructions on a client.
         pub mod instruction {
             use super::*;
+            use serde::Serialize;
 
             /// Instruction struct definitions for `#[state]` methods.
             pub mod state {

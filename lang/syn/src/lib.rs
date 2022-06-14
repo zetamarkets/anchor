@@ -80,7 +80,7 @@ pub struct StateInterface {
     pub methods: Vec<StateIx>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Ix {
     pub raw_method: ItemFn,
     pub ident: Ident,
@@ -90,13 +90,13 @@ pub struct Ix {
     pub anchor_ident: Ident,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct IxArg {
     pub name: Ident,
     pub raw_arg: PatType,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct IxReturn {
     pub ty: Type,
 }

@@ -2,6 +2,7 @@ use crate::Program;
 use quote::quote;
 
 mod accounts;
+pub mod coder;
 pub mod common;
 mod cpi;
 mod dispatch;
@@ -19,6 +20,7 @@ pub fn generate(program: &Program) -> proc_macro2::TokenStream {
     let instruction = instruction::generate(program);
     let cpi = cpi::generate(program);
     let accounts = accounts::generate(program);
+    let coder = coder::generate(program);
 
     quote! {
         // TODO: remove once we allow segmented paths in `Accounts` structs.
@@ -31,5 +33,6 @@ pub fn generate(program: &Program) -> proc_macro2::TokenStream {
         #instruction
         #cpi
         #accounts
+        // #coder // TLDR can't solve this program instruction lifetimes issue, therefore commenting out
     }
 }
