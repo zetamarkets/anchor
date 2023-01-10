@@ -8,6 +8,7 @@ export {
   getProvider,
   setProvider,
   AnchorProvider,
+  sendAndConfirmRawTransaction,
 } from "./provider.js";
 export * from "./error.js";
 export { Instruction } from "./coder/borsh/instruction.js";
