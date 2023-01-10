@@ -9,6 +9,7 @@ export {
   setProvider,
   AnchorProvider,
   sendAndConfirmRawTransaction,
+  isVersionedTransaction,
 } from "./provider.js";
 export * from "./error.js";
 export { Instruction } from "./coder/borsh/instruction.js";
