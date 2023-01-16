@@ -1,5 +1,5 @@
 {
-  "name": "@coral-xyz/anchor",
+  "name": "@zetamarkets/anchor",
   "version": "0.26.0-beta-3",
   "description": "Anchor client",
   "module": "./dist/esm/index.js",
